@@ -1,0 +1,51 @@
+<!-- ====================================================================== -->
+<!--                                                                        -->
+<!--    XML description of the complete SiD tracker detector                -->
+<!--    of the SiD linear collider detector design.                         -->
+<!--                                                                        -->
+<!--    Contained are the required                                          -->
+<!--      ++ global constants used uniquely by this module                  -->
+<!--      ++ visualization attributes                                       -->
+<!--      ++ the definition of the readout structure and the                -->
+<!--         readout segmentation (if necessary)                            -->
+<!--      ++ the include statements for the sensitive detectors and         -->
+<!--         the corresponding support structure(s)                         -->
+<!--                                                                        -->
+<!--                                                                        -->
+<!--   @author  M.Frank                                                     -->
+<!--   @date    14/11/2014                                                  -->
+<!--                                                                        -->
+<!-- ====================================================================== -->
+
+
+
+  <detectors>
+    <detector id="EcalBarrel_ID" name="DRCrystal" type="DD4hep_DRCrystal" readout="DRCNoSegment" vis="Invisible">
+
+
+ <comment>Electromagnetic Calorimeter Barrel</comment>
+
+
+<!-- <dimensions numsides="1663" nz="382" rmin="DRinnerRadius" thickness="180" z_length="306." /> -->
+<!-- <dimensions numsides="32" nz="10" rmin="EcalBarrel_rmin" thickness="19" z_length="EcalBarrel_zmax*2" /> -->
+
+<dimensions width="1.25" z_length="3." />
+
+<!-- note in core and hole rmin is not used -->
+
+
+<!--  a tower may have several different patterns that repeat.
+for example, there may be 10 layers with one thickness of Pb and scint and 20 with another set of thicknesses.
+each of these repeating things is a "layer". (so in this example, two "layers") 
+within a layer is a slice os the Pb and scint are slices
+the assembled tower is a Stave 
+-->
+
+ <staves vis="CrystalEcalTowerVis"/>
+<layer repeat="1" vis="CrystalEcalLayerVis">
+      <slice material = "E_PbWO4" thickness = "3." sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+</layer>
+    </detector>
+  </detectors>
+
+
