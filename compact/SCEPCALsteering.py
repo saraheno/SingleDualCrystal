@@ -304,7 +304,7 @@ SIM.output.kernel = 3
 SIM.output.part = 3
 
 ## Output level for Random Number Generator setup
-SIM.output.random = 6
+SIM.output.random = 3
 
 
 ################################################################################
@@ -436,12 +436,12 @@ def setupCerenkov(kernel):
      cerenkov.MaxNumPhotonsPerStep = 10
      cerenkov.MaxBetaChangePerStep = 10.0
      cerenkov.TrackSecondariesFirst = True
-     cerenkov.VerboseLevel = 2
+     cerenkov.VerboseLevel = 0
      cerenkov.enableUI()
      seq.adopt(cerenkov)
      ph = PhysicsList(kernel, 'Geant4OpticalPhotonPhysics/OpticalGammaPhys')
      ph.addParticleConstructor('G4OpticalPhoton')
-     ph.VerboseLevel = 2
+     ph.VerboseLevel = 0
      ph.enableUI()
      seq.adopt(ph)
      return None
