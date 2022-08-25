@@ -429,16 +429,21 @@ SIM.random.replace_gRandom = True
 SIM.random.seed = None
 SIM.random.type = None
 
-
 def setupCerenkov(kernel):
-        from DDG4 import PhysicsList
-        seq = kernel.physicsList()
-        cerenkov = PhysicsList(kernel, 'Geant4CerenkovPhysics/CerenkovPhys')
-        cerenkov.MaxNumPhotonsPerStep = 10
-        cerenkov.MaxBetaChangePerStep = 10.0
-        cerenkov.TrackSecondariesFirst = True
-        cerenkov.VerboseLevel = 2
-        cerenkov.enableUI()
-        return None
-
+     from DDG4 import PhysicsList
+     seq = kernel.physicsList()
+     cerenkov = PhysicsList(kernel, 'Geant4CerenkovPhysics/CerenkovPhys')
+     cerenkov.MaxNumPhotonsPerStep = 10
+     cerenkov.MaxBetaChangePerStep = 10.0
+     cerenkov.TrackSecondariesFirst = True
+     cerenkov.VerboseLevel = 2
+     cerenkov.enableUI()
+     seq.adopt(cerenkov)
+     ph = PhysicsList(kernel, 'Geant4OpticalPhotonPhysics/OpticalGammaPhys')
+     ph.addParticleConstructor('G4OpticalPhoton')
+     ph.VerboseLevel = 2
+     ph.enableUI()
+     seq.adopt(ph)
+     return None
 SIM.physics.setupUserPhysics(setupCerenkov)
+
