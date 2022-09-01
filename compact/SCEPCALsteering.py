@@ -139,10 +139,15 @@ SIM.field.stepper = "ClassicalRK4"
 ##     default filter for calorimeter sensitive detectors;
 ##     this is applied if no other filter is used for a calorimeter
 ##     
-SIM.filter.calo = "edep0"
+#SIM.filter.calo = "edep0"
+SIM.filter.calo = ""
 
 ##  list of filter objects: map between name and parameter dictionary 
 SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}}
+
+
+SIM.filter.filters = {}
+
 
 ##  a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
 SIM.filter.mapDetFilter = {}
@@ -401,7 +406,7 @@ SIM.physics.pdgfile = None
 ##     Set printlevel to DEBUG to see a printout of all range cuts,
 ##     but this only works if range cut is not "None"
 ##     
-SIM.physics.rangecut = 0.7
+SIM.physics.rangecut = None
 
 ## Set of PDG IDs that will not be passed from the input record to Geant4.
 ## 

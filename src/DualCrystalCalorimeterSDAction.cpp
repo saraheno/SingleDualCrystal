@@ -136,8 +136,8 @@ namespace dd4hep {
       //photons
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
 	
-	//std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
-	//std::cout<<" number of cerenkov is "<<hit->ncerenkov<<std::endl;
+	//	std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
+	// std::cout<<" number of cerenkov is "<<hit->ncerenkov<<std::endl;
 
 	
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
