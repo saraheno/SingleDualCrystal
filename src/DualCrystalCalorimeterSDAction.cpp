@@ -21,6 +21,8 @@
 
 namespace CalVision {
 
+  int SCECOUNT=0;
+
   class DualCrystalCalorimeterSD {
   public:
     typedef DualCrystalCalorimeterHit Hit;
@@ -56,7 +58,8 @@ namespace dd4hep {
     /// Method for generating hit(s) using the information of G4Step object.
     template <> bool Geant4SensitiveAction<DualCrystalCalorimeterSD>::process(const G4Step* step,G4TouchableHistory* /*hist*/ ) {
 
-
+      SCECOUNT+=1;
+      bool SCEPRINT=(SCECOUNT<100);
 
 
 
@@ -136,23 +139,29 @@ namespace dd4hep {
       //photons
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
 	
-	//	std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
-	// std::cout<<" number of cerenkov is "<<hit->ncerenkov<<std::endl;
+	if(SCEPRINT) std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
+	if(SCEPRINT) std::cout<<" number of cherenkov is  is "<<hit->ncerenkov<<std::endl;
+	if(SCEPRINT) std::cout<<" number of scintillation is  is "<<hit->nscintillator<<std::endl;
 
 	
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
-	  //std::cout<<" found cerenkov photon"<<std::endl;
+	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
           hit->ncerenkov+=1;
           track->SetTrackStatus(fStopAndKill);
           return false;
-        }
-        else {
-          //      std::cout<<" why other photon?"<<std::endl;
+        } 
+	else if (  track->GetCreatorProcess()->G4VProcess::GetProcessName() == "ScintillationPhys"  ) {
+          if(SCEPRINT) std::cout<<" scintillation photon"<<std::endl;
           hit->nscintillator+=1;
           track->SetTrackStatus(fStopAndKill);
           return false;
         }
-	
+	else {
+          if(SCEPRINT) std::cout<<" other photon"<<std::endl;
+          hit->nscintillator+=1;
+          track->SetTrackStatus(fStopAndKill);
+          return false;
+	}
 
       }
 

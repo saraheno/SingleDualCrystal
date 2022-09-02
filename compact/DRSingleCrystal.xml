@@ -562,13 +562,28 @@
     </material>
 
 
+
+
+<!-- danger danger will robinson using values for polystyrene -->
   <material name="E_PbWO4">
     <D value="8.28" unit="g/cm3" />
     <fraction n="0.45532661" ref="Pb"/>
     <fraction n="0.40403397" ref="W"/>
     <fraction n="0.14063942" ref="O"/>
     <property name="RINDEX"        ref="RINDEX__PbWO4"/>
+      <property name="ABSLENGTH" ref="AbsLen_PS"/>
+      <property name="FASTCOMPONENT" ref="scintFast_PS"/>
+      <constant name="SCINTILLATIONYIELD" value="13.9/keV"/>
+      <constant name="FASTTIMECONSTANT" value="2.8*ns"/>
+      <constant name="RESOLUTIONSCALE" value="1."/>
   </material>
+
+
+
+
+
+
+
 
   
   <!-- We model vakuum just as very thin air -->
