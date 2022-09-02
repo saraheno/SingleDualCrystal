@@ -26,12 +26,10 @@
  <comment>Electromagnetic Calorimeter Barrel</comment>
 
 
-<!-- <dimensions numsides="1663" nz="382" rmin="DRinnerRadius" thickness="180" z_length="306." /> -->
-<!-- <dimensions numsides="32" nz="10" rmin="EcalBarrel_rmin" thickness="19" z_length="EcalBarrel_zmax*2" /> -->
 
-<dimensions width="1.25" z_length="3." />
+<dimensions width="DRcrystalwidth" z_length="DRcrystallength" />
 
-<!-- note in core and hole rmin is not used -->
+
 
 
 <!--  a tower may have several different patterns that repeat.
