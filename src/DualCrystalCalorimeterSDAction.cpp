@@ -123,6 +123,7 @@ namespace dd4hep {
         coll->add(cell, hit);
         printM2("CREATE hit with deposit:%e MeV  Pos:%8.2f %8.2f %8.2f  %s",
                 contrib.deposit,pos.X,pos.Y,pos.Z,handler.path().c_str());
+	std::cout<<"DRcalo deposit "<<contrib.deposit<<" position ("<<pos.X<<","<<pos.Y<<","<<pos.Z<<") string "<<handler.path().c_str()<<std::endl;
         if ( 0 == hit->cellID )  { // for debugging only!
           hit->cellID = cellID(step);
           except("+++ Invalid CELL ID for hit!");
