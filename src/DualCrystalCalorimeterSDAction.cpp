@@ -166,7 +166,7 @@ namespace dd4hep {
 	else {
           if(SCEPRINT) std::cout<<" other photon"<<std::endl;
           hit->nscintillator+=1;
-          track->SetTrackStatus(fStopAndKill);
+          //track->SetTrackStatus(fStopAndKill);
           return false;
 	}
 
