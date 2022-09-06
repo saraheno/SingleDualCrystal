@@ -47,9 +47,9 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
 
 
 
-  double width   = x_dim.width();
-  double zmax = x_dim.z_length();
-  std::cout<<" width zmax are "<<width<<" "<<zmax<<std::endl;
+  double hwidth   = x_dim.width();
+  double hzmax = x_dim.z_length();
+  std::cout<<"half width zmax are "<<hwidth<<" "<<hzmax<<std::endl;
 
 
 
@@ -67,7 +67,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
 
   //PolyhedraRegular hedra  (nphi,inner_r,outer_r+tol*2e0,zmaxt);
   //set containment area for whole calorimeter
-  Box hedra  (10.*width,10.*width, 10.*zmax);
+  Box hedra  (10.*hwidth,10.*hwidth, 10.*hzmax);
   Volume        envelope  (det_name,hedra,air);
   PlacedVolume  env_phv   = motherVol.placeVolume(envelope,RotationZYX(0,0,0));
 
@@ -88,7 +88,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
 
 
     // tower envelope
-  dd4hep::Box towertrap(width,width,zmax);
+  dd4hep::Box towertrap(hwidth,hwidth,hzmax);
   dd4hep::Volume towerVol( "tower", towertrap, air);
   std::cout<<"   tower visstr is "<<x_towers.visStr()<<std::endl;
   towerVol.setVisAttributes(description, x_towers.visStr());
@@ -98,42 +98,49 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   towerVol.setSensitiveDetector(sens);
 
     // Loop over the sets of layer elements in the detector.
-  double z_bottoml  = -zmax/2.;
+  double z_bottoml  = -hzmax;
   int l_num = 1;
   for(xml_coll_t li(x_det,_U(layer)); li; ++li)  {
+    std::cout<<"DRCrystal layer "<<li<<std::endl;
     xml_comp_t x_layer = li;
     int repeat = x_layer.repeat();
       // Loop over number of repeats for this layer.
     for (int j=0; j<repeat; j++)    {
+      std::cout<<"DRCrystal layer "<<li<<" repeat "<<j<<std::endl;
       string l_name = _toString(l_num,"layer%d");
-      double l_zthick = layering.layer(l_num-1)->thickness();  // Layer's thickness.
+      double l_hzthick = layering.layer(l_num-1)->thickness();  // Layer's thickness.
+      std::cout<<"half  thickness is "<<l_hzthick<<std::endl;
 
 	// find top and bottom lengths at this position and center
         // relative to tower bottom
-      double z_topl=z_bottoml + l_zthick;
-      double z_midl=z_bottoml + l_zthick/2.;
+      double z_topl=z_bottoml + 2.*l_hzthick;
+      double z_midl=z_bottoml + l_hzthick;
       Position   l_pos(0.,0.,z_midl);      // Position of the layer.
+      std::cout<<" placed at z of "<<z_midl<<std::endl;
 
-      dd4hep::Box l_box(width-tol,width-tol,l_zthick-tol);
+      dd4hep::Box l_box(hwidth-tol,hwidth-tol,l_hzthick-tol);
       dd4hep::Volume     l_vol(l_name,l_box,air);
       DetElement layer(tower_det, l_name, det_id);
 
         // Loop over the sublayers or slices for this layer.
       int s_num = 1;
 
-      double z_bottoms2=-l_zthick/2.;  //relative to slice bottom
+      double z_bottoms2=-l_hzthick;  
       for(xml_coll_t si(x_layer,_U(slice)); si; ++si)  {
+	std::cout<<" with slice "<<si<<std::endl;
 	xml_comp_t x_slice = si;
 	string     s_name  = _toString(s_num,"slice%d");
-	double     s_zthick = x_slice.thickness();
+	double     s_hzthick = x_slice.thickness();
+	std::cout<<" with half  thickness "<<s_hzthick<<std::endl;
 
 	      // this is relative to tower bottom, not layer bottom
 
-	double z_mids2 = z_bottoms2+s_zthick/2.;
+	double z_mids2 = z_bottoms2+s_hzthick;
 	      
 
 	Position   s_pos(0.,0.,z_mids2);      // Position of the layer.
-	dd4hep::Box s_box(width-tol,width-tol,s_zthick);
+	std::cout<<" placed at "<<z_mids2<<std::endl;
+	dd4hep::Box s_box(hwidth-tol,hwidth-tol,s_hzthick);
 
 
 	dd4hep::Volume     s_vol(s_name,s_box,description.material(x_slice.materialStr()));
@@ -151,7 +158,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
 	slice.setPlacement(slice_phv);
           // Increment Z position of slice.
 
-	z_bottoms2 += s_zthick;
+	z_bottoms2 += 2.*s_hzthick;
 
           // Increment slice number.
 	      ++s_num;
@@ -169,7 +176,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
         // Increment to next layer Z position.
 
 
-      z_bottoml=z_bottoml+l_zthick;
+      z_bottoml=z_bottoml+2.*l_hzthick;
 
       ++l_num;
     }

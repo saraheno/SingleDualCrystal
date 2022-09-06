@@ -18,6 +18,7 @@
 <!-- ====================================================================== -->
 
 
+<!-- please note these are half lengths and widths -->
 
   <detectors>
     <detector id="EcalBarrel_ID" name="DRCrystal" type="DD4hep_DRCrystal" readout="DRCNoSegment" vis="Invisible">
@@ -39,9 +40,9 @@ within a layer is a slice os the Pb and scint are slices
 the assembled tower is a Stave 
 -->
 
- <staves vis="CrystalEcalTowerVis"/>
-<layer repeat="1" vis="CrystalEcalLayerVis">
-      <slice material = "E_PbWO4" thickness = "DRcrystallength-0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+ <staves vis="Invisible"/>
+<layer repeat="1" vis="Invisible">
+      <slice material = "E_PbWO4" thickness = "DRcrystallength-0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/>
       <slice material = "PyrexGlass" thickness = "0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
 </layer>
     </detector>
