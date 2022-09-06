@@ -141,6 +141,12 @@ namespace dd4hep {
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
 	
 	if(SCEPRINT) std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
+	if(SCEPRINT) std::cout<<" photon mother is "<<track->GetParentID()<<std::endl;
+	if(SCEPRINT) std::cout<<" photon material is "<<(track->GetMaterial())->GetName()<<std::endl;
+	if(SCEPRINT) std::cout<<" photon creator process is "<<(track->GetCreatorProcess())->GetProcessName()<<std::endl;
+	if(SCEPRINT) std::cout<<" photon  process  type is "<<(track->GetCreatorProcess())->GetProcessType()<<std::endl;
+	if(SCEPRINT) std::cout<<" photon sub process is "<<(track->GetCreatorProcess())->GetProcessSubType()<<std::endl;
+	//(track->GetCreatorProcess())->DumpInfo();
 	if(SCEPRINT) std::cout<<" number of cherenkov is  is "<<hit->ncerenkov<<std::endl;
 	if(SCEPRINT) std::cout<<" number of scintillation is  is "<<hit->nscintillator<<std::endl;
 
@@ -148,7 +154,7 @@ namespace dd4hep {
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
 	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
           hit->ncerenkov+=1;
-          track->SetTrackStatus(fStopAndKill);
+	  if(((track->GetMaterial())->GetName())=="PyrexGlass") track->SetTrackStatus(fStopAndKill);
           return false;
         } 
 	else if (  track->GetCreatorProcess()->G4VProcess::GetProcessName() == "ScintillationPhys"  ) {

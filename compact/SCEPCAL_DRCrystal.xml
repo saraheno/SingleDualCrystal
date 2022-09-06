@@ -41,7 +41,8 @@ the assembled tower is a Stave
 
  <staves vis="CrystalEcalTowerVis"/>
 <layer repeat="1" vis="CrystalEcalLayerVis">
-      <slice material = "E_PbWO4" thickness = "3." sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <slice material = "E_PbWO4" thickness = "DRcrystallength-0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <slice material = "PyrexGlass" thickness = "0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
 </layer>
     </detector>
   </detectors>

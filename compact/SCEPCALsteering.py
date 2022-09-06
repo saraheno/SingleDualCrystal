@@ -80,8 +80,8 @@ SIM.action.calorimeterSDTypes = [u'calorimeter']
 #SIM.action.calorimeterSDTypes = [u'calorimeter', 'drcalosipmsd']
 
 ## set sensitive action for DRcalo
-SIM.action.mapActions['DRSimple'] = 'DualCrystalCalorimeterSDAction'
-SIM.action.mapActions['CrystalEcalBarrel'] = 'DualCrystalCalorimeterSDAction'
+#SIM.action.mapActions['DRSimple'] = 'DualCrystalCalorimeterSDAction'
+#SIM.action.mapActions['CrystalEcalBarrel'] = 'DualCrystalCalorimeterSDAction'
 
 
 ## Create a map of patterns and actions to be applied to sensitive detectors.
