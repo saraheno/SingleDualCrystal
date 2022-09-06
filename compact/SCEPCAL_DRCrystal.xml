@@ -43,7 +43,7 @@ the assembled tower is a Stave
  <staves vis="Invisible"/>
 <layer repeat="1" vis="Invisible">
       <slice material = "E_PbWO4" thickness = "DRcrystallength-0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/>
-      <slice material = "E_PbWO4" thickness = "0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <slice material = "Air" thickness = "0.2" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
 </layer>
     </detector>
   </detectors>
