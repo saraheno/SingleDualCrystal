@@ -154,7 +154,7 @@ namespace dd4hep {
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
 	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
           hit->ncerenkov+=1;
-	  if(((track->GetMaterial())->GetName())=="PyrexGlass") track->SetTrackStatus(fStopAndKill);
+	  if(((track->GetMaterial())->GetName())=="Air") track->SetTrackStatus(fStopAndKill);
           return false;
         } 
 	else if (  track->GetCreatorProcess()->G4VProcess::GetProcessName() == "ScintillationPhys"  ) {
