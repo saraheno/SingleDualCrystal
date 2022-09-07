@@ -139,40 +139,58 @@ namespace dd4hep {
 
       //photons
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
+
+
+	//if(track->GetParentID()!=1) SCEPRINT=1;
+	if( (track->GetCreatorProcess()->G4VProcess::GetProcessName() != "CerenkovPhys")&&(track->GetCreatorProcess()->G4VProcess::GetProcessName() != "ScintillationPhys")  ) SCEPRINT=1;
+	if(SCEPRINT) {
 	
-	if(SCEPRINT) std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
-	if(SCEPRINT) std::cout<<" photon mother is "<<track->GetParentID()<<std::endl;
-	if(SCEPRINT) std::cout<<" photon material is "<<(track->GetMaterial())->GetName()<<std::endl;
-	if(SCEPRINT) std::cout<<" photon creator process is "<<(track->GetCreatorProcess())->GetProcessName()<<std::endl;
-	if(SCEPRINT) std::cout<<" photon  process  type is "<<(track->GetCreatorProcess())->GetProcessType()<<std::endl;
-	if(SCEPRINT) std::cout<<" photon sub process is "<<(track->GetCreatorProcess())->GetProcessSubType()<<std::endl;
+	  std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
+	  std::cout<<" photon mother is "<<track->GetParentID()<<std::endl;
+	  std::cout<<" photon material is "<<(track->GetMaterial())->GetName()<<std::endl;
+	  std::cout<<" photon creator process is "<<(track->GetCreatorProcess())->GetProcessName()<<std::endl;
+	  std::cout<<" photon  process  type is "<<(track->GetCreatorProcess())->GetProcessType()<<std::endl;
+	  std::cout<<" photon sub process is "<<(track->GetCreatorProcess())->GetProcessSubType()<<std::endl;
+	  std::cout<<" photon current step number is "<<track->GetCurrentStepNumber()<<std::endl;
 	//(track->GetCreatorProcess())->DumpInfo();
-	if(SCEPRINT) std::cout<<" number of cherenkov is  is "<<hit->ncerenkov<<std::endl;
-	if(SCEPRINT) std::cout<<" number of scintillation is  is "<<hit->nscintillator<<std::endl;
+	  std::cout<<" number of cherenkov is  is "<<hit->ncerenkov<<std::endl;
+	  std::cout<<" number of scintillation is  is "<<hit->nscintillator<<std::endl;
+	}
+
 
 	
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
 	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
-          hit->ncerenkov+=1;
-	  if(((track->GetMaterial())->GetName())=="Air") track->SetTrackStatus(fStopAndKill);
-          return false;
+	  if(((track->GetMaterial())->GetName())=="killMedia") 
+	    { 
+	      hit->ncerenkov+=1;
+	      track->SetTrackStatus(fStopAndKill);}
+	  else {
+	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
+	  }
+          //return false;
         } 
 	else if (  track->GetCreatorProcess()->G4VProcess::GetProcessName() == "ScintillationPhys"  ) {
           if(SCEPRINT) std::cout<<" scintillation photon"<<std::endl;
-          hit->nscintillator+=1;
-          track->SetTrackStatus(fStopAndKill);
-          return false;
+          if(((track->GetMaterial())->GetName())=="killMedia") 
+	    {
+	      hit->nscintillator+=1;
+	      track->SetTrackStatus(fStopAndKill);}
+	  else {
+	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
+	  }
+
+          //return false;
         }
 	else {
           if(SCEPRINT) std::cout<<" other photon"<<std::endl;
-          hit->nscintillator+=1;
           //track->SetTrackStatus(fStopAndKill);
-          return false;
+          //return false;
 	}
 
       }
 
-      else {
+    else {   // particles other than optical photons
 	//        std::cout<<" not a photon"<<std::endl;
 
 
@@ -180,7 +198,7 @@ namespace dd4hep {
         hit->truth.emplace_back(contrib);
 
         mark(h.track);
-        return true;
+        //return true;
       }
 
 	
@@ -188,8 +206,8 @@ namespace dd4hep {
 
     }
 	
-      }
-}
+  }
+} // end namespace calvision
 
 //--- Factory declaration
 namespace dd4hep { namespace sim {
