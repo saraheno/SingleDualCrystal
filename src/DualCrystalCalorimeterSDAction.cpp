@@ -123,7 +123,7 @@ namespace dd4hep {
         coll->add(cell, hit);
         printM2("CREATE hit with deposit:%e MeV  Pos:%8.2f %8.2f %8.2f  %s",
                 contrib.deposit,pos.X,pos.Y,pos.Z,handler.path().c_str());
-	std::cout<<"DRcalo deposit "<<contrib.deposit<<" position ("<<pos.X<<","<<pos.Y<<","<<pos.Z<<") string "<<handler.path().c_str()<<std::endl;
+	std::cout<<"DRcalo deposit "<<contrib.deposit<<" position ("<<pos.X<<","<<pos.Y<<","<<pos.Z<<") string "<<handler.path().c_str()<<" volume id "<<cell<<std::endl;
         if ( 0 == hit->cellID )  { // for debugging only!
           hit->cellID = cellID(step);
           except("+++ Invalid CELL ID for hit!");
@@ -143,7 +143,9 @@ namespace dd4hep {
 
 	//if(track->GetParentID()!=1) SCEPRINT=1;
 	if( (track->GetCreatorProcess()->G4VProcess::GetProcessName() != "CerenkovPhys")&&(track->GetCreatorProcess()->G4VProcess::GetProcessName() != "ScintillationPhys")  ) SCEPRINT=1;
+
 	if(SCEPRINT) {
+	  std::cout<<"SCECOUNT="<<SCECOUNT<<std::endl;
 	
 	  std::cout<<"will robinson have photon "<<track->GetCreatorProcess()->G4VProcess::GetProcessName() <<std::endl;
 	  std::cout<<" photon mother is "<<track->GetParentID()<<std::endl;
