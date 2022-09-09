@@ -82,22 +82,21 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       if( nbyte>0) {
 	std::cout<<" Gen parts "<<nbyte<<" bytes "<<gens->size() <<std::endl;
       }
-      //      for(size_t i=0;i<gens->size(); ++i) {
       hgenPsize->Fill(gens->size());
-      //for(size_t i=0;i<10; ++i) {
-      //	dd4hep::sim::Geant4Particle* agen =gens->at(i);
-      //	hgenPdgID->Fill(agen->pdgID);
-      //}
+      for(size_t i=0;i<gens->size(); ++i) {
+        dd4hep::sim::Geant4Particle* agen =gens->at(i);
+        hgenPdgID->Fill(agen->pdgID);
+      }
     }
   }
   
 
 
-  /*
+ 
   
 
   // loop over events in the ecal loop
-  TBranch* b_ecal = t->GetBranch("CrystalEcalBarrelHits");
+  TBranch* b_ecal = t->GetBranch("DRCNoSegment");
   ihaha=b_ecal->GetEntries();
   num_evt= std::min(ihaha,num_evtsmax);
   std::cout<<" doing "<<b_ecal->GetName()<<std::endl;
@@ -106,27 +105,30 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   if(num_evt>0) {
     CalHits* ecalhits = new CalHits();
     b_ecal->SetAddress(&ecalhits);
+
     for(int ievt=0;ievt<num_evt; ++ievt) {
       std::cout<<"event number is "<<ievt<<std::endl;
       int nbyte = b_ecal->GetEntry(ievt);
       if( nbyte>0) {
-	std::cout<<" Ecal Hits "<<nbyte<<" bytes "<<ecalhits->size() <<std::endl;
+      std::cout<<" Ecal Hits "<<nbyte<<" bytes "<<ecalhits->size() <<std::endl;
       }
       float esum=0.;
       int ncertot=0;
-      for(size_t i=0;i<10; ++i) {
+      for(size_t i=0;i<ecalhits->size(); ++i) {
 	CalVision::DualCrystalCalorimeterHit* aecalhit =ecalhits->at(i);
 	//	std::cout<<"       "<<i<<" energy "<<aecalhit->energyDeposit<<std::endl;
 	esum+=aecalhit->energyDeposit;
 	ncertot+=aecalhit->ncerenkov;
+	std::cout<<" hit channel is "<<aecalhit->cellID<<std::endl;
       }
+    
       hcEcalE->Fill(esum/1000.);
       hcEcalncer->Fill(ncertot);
     }
   }
     
   
-  */
+
 
   
  
