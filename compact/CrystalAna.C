@@ -45,7 +45,11 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hgenPsize = new TH1F("hgenPsize","number of generator particles",600,0.,40000);
   TH1F *hgenPdgID = new TH1F("hgenpdgID","pdgID of generator particles",600,-200,200);
   TH1F *hcEcalE = new TH1F("hcEcalE","sum crystal ecal energy",100,0.,100.);
-  TH1F *hcEcalncer = new TH1F("hcEcalncer","total number of cerenkov",100,0.,10000000);
+  TH1F *hcEcalncer = new TH1F("hcEcalncer","total number of cerenkov",100,0.,10000);
+  TH1F *hcEcalncer0 = new TH1F("hcEcalncer0","total number of cerenkov chan 1",100,0.,10000);
+  TH1F *hcEcalncer1 = new TH1F("hcEcalncer1","total number of cerenkov chan 2",100,0.,10000);
+  TH1F *hcEcalncer2 = new TH1F("hcEcalncer2","total number of cerenkov chan 3",100,0.,10000);
+  TH1F *hcEcalncer3 = new TH1F("hcEcalncer3","total number of cerenkov chan 4",100,0.,10000);
 
   // open data and output file for histograms
 
@@ -147,6 +151,13 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
     
       hcEcalE->Fill(esum/1000.);
       hcEcalncer->Fill(ncertot);
+      hcEcalncer0->Fill(ncerchan[0]);
+      hcEcalncer1->Fill(ncerchan[1]);
+      hcEcalncer2->Fill(ncerchan[2]);
+      hcEcalncer3->Fill(ncerchan[3]);
+
+
+
       std::cout<<" total energy deposit "<<esum<<std::endl;
       float check=0.;
       for( int i=0;i<nchan;i++) {
@@ -189,6 +200,10 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   hgenPdgID->Write();
   hcEcalE->Write();
   hcEcalncer->Write();
+  hcEcalncer0->Write();
+  hcEcalncer1->Write();
+  hcEcalncer2->Write();
+  hcEcalncer3->Write();
   out->Close();
 
 }
