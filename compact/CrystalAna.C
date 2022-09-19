@@ -16,7 +16,8 @@
 #include <vector>
 #include <algorithm>
 
-
+const int nchan = 4;
+const int ichan[nchan] = {198,166,230,6};
 
 
 void crystalana(int num_evtsmax, const char* inputfilename) {
@@ -113,19 +114,40 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       std::cout<<" Ecal Hits "<<nbyte<<" bytes "<<ecalhits->size() <<std::endl;
       }
       float esum=0.;
+      float esumchan[nchan]={0.,0.,0.,0.};
       int ncertot=0;
       for(size_t i=0;i<ecalhits->size(); ++i) {
 	CalVision::DualCrystalCalorimeterHit* aecalhit =ecalhits->at(i);
 	//	std::cout<<"       "<<i<<" energy "<<aecalhit->energyDeposit<<std::endl;
 	esum+=aecalhit->energyDeposit;
 	ncertot+=aecalhit->ncerenkov;
-	std::cout<<" hit channel is "<<aecalhit->cellID<<std::endl;
-      }
+	std::cout<<" hit channel is "<< aecalhit->cellID<<std::endl;
+
+      // there is a better way to do this
+	int jchan=aecalhit->cellID;
+	int kchan=-1;
+	for( int i=0;i<nchan;i++ ) {
+	  if(ichan[i]==jchan) kchan=i;
+	}
+	if(kchan==-1) {
+	  std::cout<<"unknown hit channel is "<< aecalhit->cellID<<std::endl;
+	} else {
+	  esumchan[kchan]+=aecalhit->energyDeposit;
+	}
+
+
+      }  // end loop over hits
+
     
       hcEcalE->Fill(esum/1000.);
       hcEcalncer->Fill(ncertot);
-    }
-  }
+      for( int i=0;i<nchan;i++) {
+	std::cout<<"esum ["<<ichan[i]<<"]="<<esumchan[i]<<std::endl;
+      }
+
+
+    }  //end loop over events
+  }  // end if no events
     
   
 
