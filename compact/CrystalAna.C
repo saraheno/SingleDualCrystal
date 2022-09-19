@@ -115,13 +115,17 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       }
       float esum=0.;
       float esumchan[nchan]={0.,0.,0.,0.};
+      int ncerchan[nchan]={0,0,0,0};
+      int nscintchan[nchan]={0,0,0,0};
       int ncertot=0;
+      int nscinttot=0;
       for(size_t i=0;i<ecalhits->size(); ++i) {
 	CalVision::DualCrystalCalorimeterHit* aecalhit =ecalhits->at(i);
 	//	std::cout<<"       "<<i<<" energy "<<aecalhit->energyDeposit<<std::endl;
 	esum+=aecalhit->energyDeposit;
 	ncertot+=aecalhit->ncerenkov;
-	std::cout<<" hit channel is "<< aecalhit->cellID<<std::endl;
+	nscinttot+=aecalhit->nscintillator;
+	std::cout<<" hit channel is "<< aecalhit->cellID<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
 
       // there is a better way to do this
 	int jchan=aecalhit->cellID;
@@ -133,6 +137,8 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	  std::cout<<"unknown hit channel is "<< aecalhit->cellID<<std::endl;
 	} else {
 	  esumchan[kchan]+=aecalhit->energyDeposit;
+	  ncerchan[kchan]+=aecalhit->ncerenkov;
+	  nscintchan[kchan]+=aecalhit->nscintillator;
 	}
 
 
@@ -141,9 +147,30 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
     
       hcEcalE->Fill(esum/1000.);
       hcEcalncer->Fill(ncertot);
+      std::cout<<" total energy deposit "<<esum<<std::endl;
+      float check=0.;
       for( int i=0;i<nchan;i++) {
 	std::cout<<"esum ["<<ichan[i]<<"]="<<esumchan[i]<<std::endl;
+	check+=esumchan[i];
       }
+      std::cout<<" check total energy desposit "<<check<<std::endl;
+
+      std::cout<<" total number of cherenkov is "<<ncertot<<std::endl;
+      check=0;
+      for( int i=0;i<nchan;i++) {
+	std::cout<<"ncerenkov ["<<ichan[i]<<"]="<<ncerchan[i]<<std::endl;
+	check+=ncerchan[i];
+      }
+      std::cout<<" check ncerenkov "<<check<<std::endl;
+
+
+      std::cout<<" total number of scintillator is "<<nscinttot<<std::endl;
+      check=0;
+      for( int i=0;i<nchan;i++) {
+	std::cout<<"nscintillator ["<<ichan[i]<<"]="<<nscintchan[i]<<std::endl;
+	check+=nscintchan[i];
+      }
+      std::cout<<" check nscintillator "<<check<<std::endl;
 
 
     }  //end loop over events
