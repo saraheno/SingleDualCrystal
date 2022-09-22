@@ -19,7 +19,19 @@
 
 
 
+
+
+
+
+
 namespace CalVision {
+
+  G4double fromEvToNm(G4double energy)
+  {
+    // there is some bug somewhere.  shouldn't need this factor
+    return 1239.84187 / energy*1000.;
+  }
+
 
   int SCECOUNT=0;
 
@@ -65,8 +77,8 @@ namespace dd4hep {
 
       G4StepPoint *thePrePoint = step->GetPreStepPoint();
       G4StepPoint *thePostPoint = step->GetPostStepPoint();
-      const G4ThreeVector &thePrePosition = thePrePoint->GetPosition();
-      const G4ThreeVector &thePostPosition = thePostPoint->GetPosition();
+      //      const G4ThreeVector &thePrePosition = thePrePoint->GetPosition();
+      //const G4ThreeVector &thePostPosition = thePostPoint->GetPosition();
       G4VPhysicalVolume *thePrePV = thePrePoint->GetPhysicalVolume();
       G4VPhysicalVolume *thePostPV = thePostPoint->GetPhysicalVolume();
       G4String thePrePVName = "";
@@ -75,8 +87,8 @@ namespace dd4hep {
       G4String thePostPVName = "";
       if (thePostPV)
 	thePostPVName = thePostPV->GetName();
-      G4Track *theTrack = step->GetTrack();
-      G4int TrPDGid = theTrack->GetDefinition()->GetPDGEncoding();
+      //G4Track *theTrack = step->GetTrack();
+      //G4int TrPDGid = theTrack->GetDefinition()->GetPDGEncoding();
 
       //      if(thePrePVName.contains("slice")==0) {
       //std::cout<<"entering DualCrystalAction"<<std::endl;
@@ -155,17 +167,24 @@ namespace dd4hep {
 	  std::cout<<" photon sub process is "<<(track->GetCreatorProcess())->GetProcessSubType()<<std::endl;
 	  std::cout<<" photon current step number is "<<track->GetCurrentStepNumber()<<std::endl;
 	//(track->GetCreatorProcess())->DumpInfo();
+	  std::cout<<" photon energy is "<<track->GetTotalEnergy()/eV<<std::endl;
+	  std::cout<<" photon wavelength is "<<fromEvToNm(track->GetTotalEnergy()/eV)<<std::endl;
 	  std::cout<<" number of cherenkov is  is "<<hit->ncerenkov<<std::endl;
 	  std::cout<<" number of scintillation is  is "<<hit->nscintillator<<std::endl;
 	}
 
-
+	float wavelength=fromEvToNm(track->GetTotalEnergy()/eV);
+	int ibin=-1;
+	float binsize=(hit->wavelenmax-hit->wavelenmin)/hit->nbin;
+	ibin = (wavelength-hit->wavelenmin)/binsize;
 	
+
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
 	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
 	  if(((track->GetMaterial())->GetName())=="killMedia") 
 	    { 
 	      hit->ncerenkov+=1;
+	      if(ibin>-1&&ibin<hit->nbin) ((hit->ncerwave).at(ibin))+=1;
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
 	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
@@ -177,6 +196,7 @@ namespace dd4hep {
           if(((track->GetMaterial())->GetName())=="killMedia") 
 	    {
 	      hit->nscintillator+=1;
+	      if((ibin>-1)&&(ibin<hit->nbin)) ((hit->nscintwave).at(ibin))+=1;
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
 	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
@@ -211,8 +231,67 @@ namespace dd4hep {
   }
 } // end namespace calvision
 
+
+
+
+
+
+
+namespace dd4hep { namespace sim {
+
+    using namespace CalVision;
+
+    struct WavelengthMinimumCut : public dd4hep::sim::Geant4Filter  {
+  /// Energy cut value
+      double m_wavelengthCut;
+    public:
+  /// Constructor.
+      WavelengthMinimumCut(dd4hep::sim::Geant4Context* c, const std::string& n);
+  /// Standard destructor
+      virtual ~WavelengthMinimumCut();
+  /// Filter action. Return true if hits should be processed
+      virtual bool operator()(const G4Step* step) const  override  final  {
+	bool test=true;
+	G4Track *theTrack = step->GetTrack();
+	if(theTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() ) {
+	  float energy=theTrack->GetTotalEnergy()/eV;
+	  float wave=fromEvToNm(energy);
+	  if(wave < m_wavelengthCut) {
+	    theTrack->SetTrackStatus(fStopAndKill);
+	    test=false;}
+	}
+	return test;
+      }
+      virtual bool operator()(const Geant4FastSimSpot* spot) const  override  final  {
+	return true;
+      }
+    };
+
+  /// Constructor.
+    WavelengthMinimumCut::WavelengthMinimumCut(Geant4Context* c, const std::string& n)
+      : Geant4Filter(c,n) {
+      InstanceCount::increment(this);
+      declareProperty("Cut",m_wavelengthCut=0.0);
+    }
+
+  /// Standard destructor
+    WavelengthMinimumCut::~WavelengthMinimumCut() {
+      InstanceCount::decrement(this);
+    }
+
+
+  }
+
+
+}
+
+
+
+
+
 //--- Factory declaration
 namespace dd4hep { namespace sim {
     typedef Geant4SensitiveAction<DualCrystalCalorimeterSD> DualCrystalCalorimeterSDAction;
   }}
 DECLARE_GEANT4SENSITIVE(DualCrystalCalorimeterSDAction)
+DECLARE_GEANT4ACTION(WavelengthMinimumCut)

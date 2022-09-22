@@ -130,6 +130,11 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	ncertot+=aecalhit->ncerenkov;
 	nscinttot+=aecalhit->nscintillator;
 	std::cout<<" hit channel is "<< aecalhit->cellID<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
+	int ijchan=aecalhit->nbin;
+	for (int j=0;j<ijchan;j++) {
+	  std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
+	  std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
+	}
 
       // there is a better way to do this
 	int jchan=aecalhit->cellID;

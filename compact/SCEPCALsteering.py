@@ -140,13 +140,17 @@ SIM.field.stepper = "ClassicalRK4"
 ##     this is applied if no other filter is used for a calorimeter
 ##     
 #SIM.filter.calo = "edep0"
-SIM.filter.calo = ""
+
 
 ##  list of filter objects: map between name and parameter dictionary 
-SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}}
+SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}, 'wv300nm': {'name': 'WavelengthMinimumCut', 'parameter': {'Cut': 300.}}}
 
 
 SIM.filter.filters = {}
+
+
+
+SIM.filter.calo = "wv300nm"
 
 
 ##  a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
