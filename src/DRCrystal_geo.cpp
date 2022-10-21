@@ -37,7 +37,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   int           det_id    = x_det.id();
   std::cout<<" det_id is "<<det_id<<std::endl;
   string        det_name  = x_det.nameStr();
-  std::cout<<" det_name is "<<det_name<<std::endl;
+  std::cout<<" det_name is .. "<<det_name<<std::endl;
 
 
   // pointer to finding dimensins text in xml file
