@@ -144,7 +144,7 @@ SIM.field.stepper = "ClassicalRK4"
 
 ##  list of filter objects: map between name and parameter dictionary 
 SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}, 'wvmin900nm': {'name': 'WavelengthMinimumCut', 'parameter': {'Cut': 900.}},
-'wvwind': {'name': 'WavelengthnmwindCut', 'parameter': {'Cut': 860.}}
+'wvwind': {'name': 'WavelengthnmwindCut', 'parameter': {'Cut': 820.}}
 }
 
 

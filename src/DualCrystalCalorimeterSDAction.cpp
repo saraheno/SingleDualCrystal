@@ -70,7 +70,7 @@ namespace dd4hep {
     /// Method for generating hit(s) using the information of G4Step object.
     template <> bool Geant4SensitiveAction<DualCrystalCalorimeterSD>::process(const G4Step* step,G4TouchableHistory* /*hist*/ ) {
 
-      SCECOUNT+=1;
+
       bool SCEPRINT=(SCECOUNT<10000);
       //if(SCEPRINT) std::cout<<"scecount is "<<SCECOUNT<<" print is "<<SCEPRINT<<std::endl;
 
@@ -152,6 +152,7 @@ namespace dd4hep {
 
       //photons
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
+	SCECOUNT+=1;
 	if(SCEPRINT) std::cout<<"optical photon"<<std::endl;
 
 	//if(track->GetParentID()!=1) SCEPRINT=1;
