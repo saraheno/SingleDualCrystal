@@ -72,7 +72,7 @@ namespace dd4hep {
 
       SCECOUNT+=1;
       bool SCEPRINT=(SCECOUNT<10000);
-      if(SCEPRINT) std::cout<<"scecount is "<<SCECOUNT<<" print is "<<SCEPRINT<<std::endl;
+      //if(SCEPRINT) std::cout<<"scecount is "<<SCECOUNT<<" print is "<<SCEPRINT<<std::endl;
 
 
 
