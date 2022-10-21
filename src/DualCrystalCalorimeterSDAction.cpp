@@ -71,7 +71,8 @@ namespace dd4hep {
     template <> bool Geant4SensitiveAction<DualCrystalCalorimeterSD>::process(const G4Step* step,G4TouchableHistory* /*hist*/ ) {
 
       SCECOUNT+=1;
-      bool SCEPRINT=(SCECOUNT<100);
+      bool SCEPRINT=(SCECOUNT<10000);
+      if(SCEPRINT) std::cout<<"scecount is "<<SCECOUNT<<" print is "<<SCEPRINT<<std::endl;
 
 
 
@@ -147,11 +148,11 @@ namespace dd4hep {
 
       G4Track * track =  step->GetTrack();
 
-
+      if(SCEPRINT) std::cout<< (track->GetDefinition())->GetParticleName()<<std::endl;
 
       //photons
       if( track->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() )  {
-
+	if(SCEPRINT) std::cout<<"optical photon"<<std::endl;
 
 	//if(track->GetParentID()!=1) SCEPRINT=1;
 	if( (track->GetCreatorProcess()->G4VProcess::GetProcessName() != "CerenkovPhys")&&(track->GetCreatorProcess()->G4VProcess::GetProcessName() != "ScintillationPhys")  ) SCEPRINT=1;
@@ -214,7 +215,7 @@ namespace dd4hep {
 
     else {   // particles other than optical photons
 	//        std::cout<<" not a photon"<<std::endl;
-
+	if(SCEPRINT) std::cout<<"NOT optical photon"<<std::endl;
 
         hit->energyDeposit += contrib.deposit;
         hit->truth.emplace_back(contrib);
@@ -296,7 +297,7 @@ namespace dd4hep { namespace sim {
 	if(theTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() ) {
 	  float energy=theTrack->GetTotalEnergy()/eV;
 	  float wave=fromEvToNm(energy);
-	  if((wave<m_wavelengthstart) || (wave > m_wavelengthstart+10) ) {
+	  if((wave<m_wavelengthstart) || (wave > m_wavelengthstart+0.5) ) {
 	    theTrack->SetTrackStatus(fStopAndKill);
 	    test=false;}
 	}
