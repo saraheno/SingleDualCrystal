@@ -280,10 +280,47 @@ namespace dd4hep { namespace sim {
     }
 
 
-  }
+
+    struct Wavelength50nmwindCut : public dd4hep::sim::Geant4Filter  {
+  /// Energy cut value
+      double m_wavelengthstart;
+    public:
+  /// Constructor.
+      Wavelength50nmwindCut(dd4hep::sim::Geant4Context* c, const std::string& n);
+  /// Standard destructor
+      virtual ~Wavelength50nmwindCut();
+  /// Filter action. Return true if hits should be processed
+      virtual bool operator()(const G4Step* step) const  override  final  {
+	bool test=true;
+	G4Track *theTrack = step->GetTrack();
+	if(theTrack->GetDefinition() == G4OpticalPhoton::OpticalPhotonDefinition() ) {
+	  float energy=theTrack->GetTotalEnergy()/eV;
+	  float wave=fromEvToNm(energy);
+	  if((wave<m_wavelengthstart) || (wave > m_wavelengthstart+50) ) {
+	    theTrack->SetTrackStatus(fStopAndKill);
+	    test=false;}
+	}
+	return test;
+      }
+      virtual bool operator()(const Geant4FastSimSpot* spot) const  override  final  {
+	return true;
+      }
+    };
+
+  /// Constructor.
+    Wavelength50nmwindCut::Wavelength50nmwindCut(Geant4Context* c, const std::string& n)
+      : Geant4Filter(c,n) {
+      InstanceCount::increment(this);
+      declareProperty("Cut",m_wavelengthstart=0.0);
+    }
+
+  /// Standard destructor
+    Wavelength50nmwindCut::~Wavelength50nmwindCut() {
+      InstanceCount::decrement(this);
+    }
 
 
-}
+  }}  // end using namespace
 
 
 
@@ -295,3 +332,4 @@ namespace dd4hep { namespace sim {
   }}
 DECLARE_GEANT4SENSITIVE(DualCrystalCalorimeterSDAction)
 DECLARE_GEANT4ACTION(WavelengthMinimumCut)
+DECLARE_GEANT4ACTION(Wavelength50nmwindCut)
