@@ -214,8 +214,8 @@ namespace dd4hep {
       }
 
     else {   // particles other than optical photons
-	//        std::cout<<" not a photon"<<std::endl;
-	if(SCEPRINT) std::cout<<"NOT optical photon"<<std::endl;
+	
+      //if(SCEPRINT) std::cout<<"NOT optical photon"<<std::endl;
 
         hit->energyDeposit += contrib.deposit;
         hit->truth.emplace_back(contrib);
