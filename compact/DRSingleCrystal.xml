@@ -29,6 +29,13 @@
   </info>
 
 
+<!--  1 eV is 1240 nm
+      2 eV    620
+      3 eV    413
+      4 eV is 309 nm
+      5 eV is 238 nm
+-->
+
  
   <properties>
     <matrix name="RINDEX__Air" coldim="2" values="  
