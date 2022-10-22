@@ -152,7 +152,7 @@ SIM.filter.filters = {}
 
 
 
-SIM.filter.calo = "wvnm"
+#SIM.filter.calo = "wvnm"
 
 
 ##  a map between patterns and filter objects, using patterns to attach filters to sensitive detector 
