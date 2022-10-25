@@ -241,7 +241,7 @@
       <fraction n="0.754" ref="N"/>
       <fraction n="0.234" ref="O"/>
       <fraction n="0.012" ref="Ar"/>
-      <property name="RINDEX"        ref="RINDEX__Air"/>
+      <property name="RINDEX"        ref="RINDEX__PbWO4"/>
     </material>
 
 
