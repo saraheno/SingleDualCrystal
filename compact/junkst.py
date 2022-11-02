@@ -143,12 +143,13 @@ SIM.field.stepper = "ClassicalRK4"
 
 
 ##  list of filter objects: map between name and parameter dictionary 
-SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}, 'wvnm': {'name': 'WavelengthMinimumCut', 'parameter': {'Cut': 10.}},
+SIM.filter.filters = {'geantino': {'name': 'GeantinoRejectFilter/GeantinoRejector', 'parameter': {}}, 'edep1kev': {'name': 'EnergyDepositMinimumCut', 'parameter': {'Cut': 0.001}}, 'edep0': {'name': 'EnergyDepositMinimumCut/Cut0', 'parameter': {'Cut': 0.0}}, 'wvnm': {'name': 'WavelengthMinimumCut', 'parameter': {'Cut': 200.}},
 'wvwind': {'name': 'WavelengthnmwindCut', 'parameter': {'Cut': 990.}}
 }
 
 
-SIM.filter.filters = {}
+#SIM.filter.filters = {}
+SIM.filter.calo="wvnm"
 
 
 
@@ -444,14 +445,11 @@ def setupCerenkovScint(kernel):
      from DDG4 import PhysicsList
      seq = kernel.physicsList()
 
-
-     cerenkov = PhysicsList(kernel, 'Geant4CerenkovPhysics/CerenkovPhys')
-     cerenkov.VerboseLevel = 0
-     cerenkov.MaxNumPhotonsPerStep = 10
-     cerenkov.MaxBetaChangePerStep = 10.0
-     cerenkov.TrackSecondariesFirst = True
-     cerenkov.enableUI()
-     seq.adopt(cerenkov)
+     scint = PhysicsList(kernel, 'Geant4ScintillationPhysics/ScintillationPhys')
+     scint.VerboseLevel = 0
+     scint.TrackSecondariesFirst = True
+     scint.enableUI()
+     seq.adopt(scint)
 
      ph = PhysicsList(kernel, 'Geant4OpticalPhotonPhysics/OpticalGammaPhys')
      ph.addParticleConstructor('G4OpticalPhoton')
