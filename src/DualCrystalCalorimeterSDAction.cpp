@@ -158,6 +158,8 @@ namespace dd4hep {
 	SCECOUNT+=1;
 	//	if(SCEPRINT) std::cout<<"optical photon"<<std::endl;
 
+	bool OptN = (track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")||(track->GetCreatorProcess()->G4VProcess::GetProcessName() == "ScintillationPhys");
+
 	//if(track->GetParentID()!=1) SCEPRINT=1;
 	if( (track->GetCreatorProcess()->G4VProcess::GetProcessName() != "CerenkovPhys")&&(track->GetCreatorProcess()->G4VProcess::GetProcessName() != "ScintillationPhys")  ) SCEPRINT=1;
 
@@ -192,7 +194,8 @@ namespace dd4hep {
 	      if(ibin>-1&&ibin<hit->nbin) ((hit->ncerwave).at(ibin))+=1;
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
-	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
+	    //	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
+	    if( (track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
 	  }
           //return false;
         } 
@@ -204,7 +207,8 @@ namespace dd4hep {
 	      if((ibin>-1)&&(ibin<hit->nbin)) ((hit->nscintwave).at(ibin))+=1;
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
-	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
+	    //	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
+	    if( (track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
 	  }
 
           //return false;
