@@ -10,8 +10,8 @@
 // Author     : M.Frank
 //
 //==========================================================================
-#ifndef EXAMPLES_DDDualCrystal_SRC_DualCrystalCalorimeterHIT_H
-#define EXAMPLES_DDDualCrystal_SRC_DualCrystalCalorimeterHIT_H
+#ifndef EXAMPLES_SingleDualCrystal_SRC_DualCrystalCalorimeterHIT_H
+#define EXAMPLES_SingleDualCrystal_SRC_DualCrystalCalorimeterHIT_H
 
 /// Framework include files
 #include "DDG4/Geant4Data.h"
@@ -108,4 +108,4 @@ namespace CalVision {
 #pragma link C++ class     CalVision::DualCrystalCalorimeterDump;
 #endif
 
-#endif // EXAMPLES_DDDualCrystal_SRC_DualCrystalCalorimeterHIT_H
+#endif // EXAMPLES_SingleDualCrystal_SRC_DualCrystalCalorimeterHIT_H

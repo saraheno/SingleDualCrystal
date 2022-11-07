@@ -36,7 +36,7 @@ void SCEPCALplot(int num_evtsmax, const char* inputfilename) {
   result = gSystem->Load("libDDG4IO");
   result = gSystem->Load("libDDEvePlugins");
   result = gSystem->Load("libDDEvePlugins");
-  result = gSystem->Load("libDDDualCrystal");
+  result = gSystem->Load("libSingleDualCrystal");
   result = gSystem->Load("libDDG4Plugins");
 
 
