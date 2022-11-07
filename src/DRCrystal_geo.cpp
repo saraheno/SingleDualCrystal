@@ -72,7 +72,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   PlacedVolume  env_phv   = motherVol.placeVolume(envelope,RotationZYX(0,0,0));
 
   env_phv.addPhysVolID("system",det_id);
-  env_phv.addPhysVolID("barrel",0);
+  //  env_phv.addPhysVolID("barrel",0);
   sdet.setPlacement(env_phv);  // associate the placed volume to the detector element
   sens.setType("calorimeter");
 
@@ -194,8 +194,8 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   Transform3D tr(RotationZYX(0.,0.,0.));
   PlacedVolume pv = envelope.placeVolume(towerVol,tr);
   pv.addPhysVolID("system",det_id);
-  pv.addPhysVolID("barrel",0);
-  pv.addPhysVolID("side",0);
+  //  pv.addPhysVolID("barrel",0);
+  //  pv.addPhysVolID("side",0);
   pv.addPhysVolID("ieta",0);
   pv.addPhysVolID("iphi",0);
 
