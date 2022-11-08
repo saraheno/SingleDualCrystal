@@ -451,6 +451,7 @@ def setupCerenkovScint(kernel):
      scint.enableUI()
      seq.adopt(scint)
 
+
      ph = PhysicsList(kernel, 'Geant4OpticalPhotonPhysics/OpticalGammaPhys')
      ph.addParticleConstructor('G4OpticalPhoton')
      ph.VerboseLevel = 0
