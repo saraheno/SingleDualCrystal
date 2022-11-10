@@ -12,7 +12,7 @@
     <constant name="DRcrystallength" value="3."/>
 
     
-    <constant name="EcalBarrel_ID" value="6"/>
+    <constant name="EcalBarrel_ID" value="1"/>
 
 
 
