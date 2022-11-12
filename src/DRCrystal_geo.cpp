@@ -16,6 +16,8 @@
 //==========================================================================
 #include "DD4hep/DetFactoryHelper.h"
 #include "XML/Layering.h"
+#include "DD4hep/OpticalSurfaces.h"
+
 
 using namespace std;
 using namespace dd4hep;
@@ -51,6 +53,8 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   double hzmax = x_dim.z_length();
   std::cout<<"half width zmax are "<<hwidth<<" "<<hzmax<<std::endl;
 
+  OpticalSurfaceManager surfMgr = description.surfaceManager();
+  OpticalSurface cryS  = surfMgr.opticalSurface("/world/"+det_name+"#mirrorSurface");
 
 
   // three structures, volumes, placedvolumes, and detelements
@@ -173,6 +177,10 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
       PlacedVolume layer_phv = towerVol.placeVolume(l_vol,l_pos);
       layer_phv.addPhysVolID("layer", l_num);
       layer.setPlacement(layer_phv);
+
+
+
+
         // Increment to next layer Z position.
 
 
@@ -201,7 +209,19 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   DetElement sd = tower_det;
 
   sd.setPlacement(pv);
-  sdet.add(sd);
+
+  BorderSurface haha = BorderSurface(description,sdet, "HallCrys", cryS, pv,env_phv);
+  haha.isValid();
+
+
+
+
+
+  // put a reflective surface between crystal and environment
+
+
+
+  //sdet.add(sd);
 
 
   // Set envelope volume attributes.
