@@ -78,7 +78,7 @@ dd4hep_configure_output ()
 dd4hep_add_plugin ( SingleDualCrystal
     GENERATED G__SingleDualCrystal.cxx 
   SOURCES src/*.cpp src/plugins/*.cpp
-  USES    DD4hep::DDCore DD4hep::DDAlign DD4hep::DDCond DD4hep::DDG4 DDDetectors
+  USES    DD4hep::DDCore DD4hep::DDAlign DD4hep::DDCond DD4hep::DDG4 
           ROOT::Core ROOT::Geom ROOT::GenVector CLHEP::CLHEP Geant4::Interface
 )
 
@@ -92,7 +92,7 @@ target_link_options(SingleDualCrystal PRIVATE -L${Geant4_DIR}/..)
 #
 #
 install(TARGETS SingleDualCrystal LIBRARY DESTINATION lib)
-install(DIRECTORY include/SingleDualCrystal DESTINATION include)
+#install(DIRECTORY include/SingleDualCrystal DESTINATION include)
 #
 #---Package installation procedure(s) -----------------------------------------
 install(DIRECTORY data eve scripts DESTINATION ${CMAKE_INSTALL_PREFIX}/examples/SingleDualCrystal )
