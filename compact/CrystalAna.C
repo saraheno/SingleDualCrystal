@@ -19,7 +19,7 @@
 
 // information about hit channel IT numbers
 const int nchan = 4;
-const int ichan[nchan] = {64,73,74,75};
+const int ichan[nchan] = {64,73,74,75};  // channel 74 is the crystal, 73 and 75 the two kill media
 
 
 void crystalana(int num_evtsmax, const char* inputfilename) {
