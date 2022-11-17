@@ -142,7 +142,14 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	esum+=aecalhit->energyDeposit;
 	ncertot+=aecalhit->ncerenkov;
 	nscinttot+=aecalhit->nscintillator;
-	std::cout<<" hit channel is "<< aecalhit->cellID<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
+	std::cout<<" hit channel is "<< std::hex<< aecalhit->cellID<<std::dec<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
+
+	int ihitchan=aecalhit->cellID;
+	int idet = (ihitchan & 0xF0)>>6;
+	std::cout<<"idet is "<<std::hex<<idet<<std::dec<<std::endl;
+
+
+
 	// print out wavelength spectra
 	int ijchan=aecalhit->nbin;
 	//	for (int j=0;j<ijchan;j++) {
