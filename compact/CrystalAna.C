@@ -146,7 +146,9 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
 	int ihitchan=aecalhit->cellID;
 	int idet = (ihitchan & 0xF0)>>6;
-	std::cout<<"idet is "<<std::hex<<idet<<std::dec<<std::endl;
+	int ilayer = (ihitchan & 0x38)>>3;
+	int islice = (ihitchan & 0x07);
+	std::cout<<"idet,ilayer,islice is ("<<idet<<","<<ilayer<<","<<islice<<")"<<std::endl;
 
 
 
