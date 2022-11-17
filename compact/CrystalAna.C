@@ -16,6 +16,8 @@
 #include <vector>
 #include <algorithm>
 
+
+// information about hit channel IT numbers
 const int nchan = 4;
 const int ichan[nchan] = {198,166,230,6};
 
@@ -37,19 +39,30 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   result = gSystem->Load("libDDG4IO");
   result = gSystem->Load("libDDEvePlugins");
   result = gSystem->Load("libDDEvePlugins");
-  result = gSystem->Load("libDDDualCrystal");
+  result = gSystem->Load("libSingleDualCrystal");
   result = gSystem->Load("libDDG4Plugins");
 
 
   // define histograms
+
+  //gen particles
   TH1F *hgenPsize = new TH1F("hgenPsize","number of generator particles",600,0.,40000);
   TH1F *hgenPdgID = new TH1F("hgenpdgID","pdgID of generator particles",600,-200,200);
+
+
+  // calorimeter infor
+  TH1F *hchan = new TH1F("hchan","channel ID number",1028,0.,1028);
   TH1F *hcEcalE = new TH1F("hcEcalE","sum crystal ecal energy",100,0.,100.);
   TH1F *hcEcalncer = new TH1F("hcEcalncer","total number of cerenkov",100,0.,10000);
-  TH1F *hcEcalncer0 = new TH1F("hcEcalncer0","total number of cerenkov chan 1",100,0.,10000);
-  TH1F *hcEcalncer1 = new TH1F("hcEcalncer1","total number of cerenkov chan 2",100,0.,10000);
-  TH1F *hcEcalncer2 = new TH1F("hcEcalncer2","total number of cerenkov chan 3",100,0.,10000);
-  TH1F *hcEcalncer3 = new TH1F("hcEcalncer3","total number of cerenkov chan 4",100,0.,10000);
+  TH1F *hcEcalncer0 = new TH1F("hcEcalncer0","total number of cerenkov chan 0",100,0.,10000);
+  TH1F *hcEcalncer1 = new TH1F("hcEcalncer1","total number of cerenkov chan 1",100,0.,10000);
+  TH1F *hcEcalncer2 = new TH1F("hcEcalncer2","total number of cerenkov chan 2",100,0.,10000);
+  TH1F *hcEcalncer3 = new TH1F("hcEcalncer3","total number of cerenkov chan 3",100,0.,10000);
+
+  TH1F *hcEcalE0 = new TH1F("hcEcalE0","energy chan 0",100,0.,10000);
+  TH1F *hcEcalE1 = new TH1F("hcEcalE1","energy chan 1",100,0.,10000);
+  TH1F *hcEcalE2 = new TH1F("hcEcalE2","energy chan 2",100,0.,10000);
+  TH1F *hcEcalE3 = new TH1F("hcEcalE3","energy chan 3",100,0.,10000);
 
   // open data and output file for histograms
 
@@ -130,11 +143,13 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	ncertot+=aecalhit->ncerenkov;
 	nscinttot+=aecalhit->nscintillator;
 	std::cout<<" hit channel is "<< aecalhit->cellID<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
+	// print out wavelength spectra
 	int ijchan=aecalhit->nbin;
-	for (int j=0;j<ijchan;j++) {
-	  std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
-	  std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
-	}
+	//	for (int j=0;j<ijchan;j++) {
+	//std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
+	//std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
+	//}
+	hchan->Fill(aecalhit->cellID);
 
       // there is a better way to do this
 	int jchan=aecalhit->cellID;
@@ -160,7 +175,10 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       hcEcalncer1->Fill(ncerchan[1]);
       hcEcalncer2->Fill(ncerchan[2]);
       hcEcalncer3->Fill(ncerchan[3]);
-
+      hcEcalE0->Fill(esumchan[0]);
+      hcEcalE1->Fill(esumchan[1]);
+      hcEcalE2->Fill(esumchan[2]);
+      hcEcalE3->Fill(esumchan[3]);
 
 
       std::cout<<" total energy deposit "<<esum<<std::endl;
