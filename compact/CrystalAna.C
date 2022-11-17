@@ -19,7 +19,7 @@
 
 // information about hit channel IT numbers
 const int nchan = 4;
-const int ichan[nchan] = {198,166,230,6};
+const int ichan[nchan] = {64,73,74,75};
 
 
 void crystalana(int num_evtsmax, const char* inputfilename) {
