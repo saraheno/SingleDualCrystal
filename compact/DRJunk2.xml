@@ -40,28 +40,28 @@
   <properties>
     <matrix name="RINDEX__Air" coldim="2" values="  
      1.0*eV 1. 
-     1.004*eV 1.
+     1.03*eV 1.
     "/>
     <matrix name="RINDEX__PbWO4" coldim="2" values="  
      1.0*eV  2.19103
-     1.004*eV  2.19414
+     1.03*eV  2.19414
     "/>
     <matrix name="RINDEX__kill" coldim="2" values="  
      1.0*eV  2.19103
-     1.004*eV  2.19414
+     1.03*eV  2.19414
     "/>
 
     <matrix name="RI_PS" coldim="2" values="
       1.0*eV 1.5749
-      1.004*eV 1.5764
+      1.03*eV 1.5764
     "/>
     <matrix name="AbsLen_PS" coldim="2" values="
-      1.0*eV 2.714*m
-      1.004*eV 3.619*m
+      1.0*eV 7.714*m
+      1.03*eV 7.619*m
     "/>
     <matrix name="scintFast_PS" coldim="2" values="
       1.0*eV 1.
-      1.004*eV 1.
+      1.03*eV 1.
     "/>
 
     </properties>
