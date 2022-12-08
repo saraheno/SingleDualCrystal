@@ -57,6 +57,7 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   OpticalSurface cryS  = surfMgr.opticalSurface("/world/"+det_name+"#mirrorSurface");
 
 
+
   // three structures, volumes, placedvolumes, and detelements
   // volumes need a setVisAttribute
   // DetElements. you can have volumes inherit attrivutesby setting them here
@@ -96,6 +97,12 @@ static Ref_t create_detector(Detector& description, xml_h e, SensitiveDetector s
   dd4hep::Volume towerVol( "tower", towertrap, air);
   std::cout<<"   tower visstr is "<<x_towers.visStr()<<std::endl;
   towerVol.setVisAttributes(description, x_towers.visStr());
+
+
+  //SkinSurface haha = SkinSurface(description,sdet, "HallCrys", cryS, towerVol);
+  //haha.isValid();
+
+
   int itower=0;
   string t_name = _toString(itower,"towerp%d") ;
   DetElement tower_det(t_name,det_id);  // detector element for a tower
