@@ -20,6 +20,7 @@
 // information about hit channel IT numbers
 const int nchan = 4;
 const int ichan[nchan] = {64,73,74,75};  // channel 74 is the crystal, 73 and 75 the two kill media
+std::string namechan[nchan] = {"air","PD1","crystal","PD2"};
 
 
 void crystalana(int num_evtsmax, const char* inputfilename) {
@@ -74,7 +75,7 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   //f->Print();
   GenParts* pgenparts = new GenParts();
   CalHits* pcalhits = new CalHits();
-  int num_evt;
+  int num_evt,nbyte;
 
   TFile* f = TFile::Open(inputfilename);
   TTree* t = (TTree*)f->Get("EVENT;1");
@@ -83,8 +84,9 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
 
   
-  // loop over events in the gen loop
+  // loop over events
   TBranch* b_mc = t->GetBranch("MCParticles");
+  TBranch* b_ecal = t->GetBranch("DRCNoSegment");
   int ihaha = b_mc->GetEntries();
   num_evt= std::min(ihaha,num_evtsmax);
   std::cout<<" doing "<<b_mc->GetName()<<std::endl;
@@ -92,43 +94,42 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   
   
   if(num_evt>0) {
+
+
+    // find branches
     GenParts* gens = new GenParts();
     b_mc->SetAddress(&gens);
+    CalHits* ecalhits = new CalHits();
+    b_ecal->SetAddress(&ecalhits);
+
+
+    int SCEPRINT2=10;
     for(int ievt=0;ievt<num_evt; ++ievt) {
-      std::cout<<"event number is "<<ievt<<std::endl;
-      int nbyte = b_mc->GetEntry(ievt);
+      std::cout<<std::endl<<std::endl<<"event number is "<<ievt<<std::endl;
+
+
+      // gen particles
+      nbyte = b_mc->GetEntry(ievt);
       if( nbyte>0) {
-	std::cout<<" Gen parts "<<nbyte<<" bytes "<<gens->size() <<std::endl;
+	if(ievt<SCEPRINT2) std::cout<<gens->size()<<" Gen particles "<<std::endl;
       }
       hgenPsize->Fill(gens->size());
       for(size_t i=0;i<gens->size(); ++i) {
         dd4hep::sim::Geant4Particle* agen =gens->at(i);
         hgenPdgID->Fill(agen->pdgID);
       }
-    }
-  }
-  
 
 
- 
-  
 
-  // loop over events in the ecal loop
-  TBranch* b_ecal = t->GetBranch("DRCNoSegment");
-  ihaha=b_ecal->GetEntries();
-  num_evt= std::min(ihaha,num_evtsmax);
-  std::cout<<" doing "<<b_ecal->GetName()<<std::endl;
-  std::cout<<"num_evt ecal hit loop is "<<num_evt<<std::endl;
-  
-  if(num_evt>0) {
-    CalHits* ecalhits = new CalHits();
-    b_ecal->SetAddress(&ecalhits);
+    // ECAL hits  
+    // there are hits in the crystal and also the photodetectors "kill media"
+    // in the crystal, photons created in the crystal are counted and their wavelengths stored
+    // in the photodetector, photons that enter are counted, wavelength stored, and then they are killed
 
-    for(int ievt=0;ievt<num_evt; ++ievt) {
-      std::cout<<"event number is "<<ievt<<std::endl;
+
       int nbyte = b_ecal->GetEntry(ievt);
       if( nbyte>0) {
-      std::cout<<" Ecal Hits "<<nbyte<<" bytes "<<ecalhits->size() <<std::endl;
+        if(ievt<SCEPRINT2) std::cout<<ecalhits->size()<<" Ecal Hits "<<std::endl;
       }
       float esum=0.;
       float esumchan[nchan]={0.,0.,0.,0.};
@@ -136,19 +137,27 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       int nscintchan[nchan]={0,0,0,0};
       int ncertot=0;
       int nscinttot=0;
+      int SCEPRINT=10;
       for(size_t i=0;i<ecalhits->size(); ++i) {
 	CalVision::DualCrystalCalorimeterHit* aecalhit =ecalhits->at(i);
 	//	std::cout<<"       "<<i<<" energy "<<aecalhit->energyDeposit<<std::endl;
 	esum+=aecalhit->energyDeposit;
 	ncertot+=aecalhit->ncerenkov;
 	nscinttot+=aecalhit->nscintillator;
-	std::cout<<" hit channel is "<< std::hex<< aecalhit->cellID<<std::dec<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
+	if(i<SCEPRINT&&ievt<SCEPRINT2) std::cout<<" hit channel is "<<aecalhit->cellID<<" in hex is "<< std::hex<< aecalhit->cellID<<std::dec<<" "<<aecalhit->energyDeposit<<" "<<aecalhit->ncerenkov<<" "<<aecalhit->nscintillator<<std::endl;
 
+
+
+
+	// see ../src/DRCrystal_geo.cpp to see the assignments
 	int ihitchan=aecalhit->cellID;
-	int idet = (ihitchan & 0xF0)>>6;
-	int ilayer = (ihitchan & 0x38)>>3;
-	int islice = (ihitchan & 0x07);
-	std::cout<<"idet,ilayer,islice is ("<<idet<<","<<ilayer<<","<<islice<<")"<<std::endl;
+	int idet = (ihitchan & 0xF0)>>6;  // this assignment is made in SCEPCALConstants.xml
+	int ilayer = (ihitchan & 0x38)>>3; // this is 1 for crystal and detectors, 0 for air around it
+	int islice = (ihitchan & 0x07);  //   this is 1 or 4 for photodetectors, 2 for crystal
+	// channels are 64 air
+	//             73 75 detectors
+	//            74 crystal
+	if(i<SCEPRINT&&ievt<SCEPRINT2) std::cout<<" idet,ilayer,islice is ("<<idet<<","<<ilayer<<","<<islice<<")"<<std::endl;
 
 
 
@@ -190,30 +199,30 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       hcEcalE3->Fill(esumchan[3]);
 
 
-      std::cout<<" total energy deposit "<<esum<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" total energy deposit "<<esum<<std::endl;
       float check=0.;
       for( int i=0;i<nchan;i++) {
-	std::cout<<"esum ["<<ichan[i]<<"]="<<esumchan[i]<<std::endl;
+	if(ievt<SCEPRINT2) std::cout<<"esum ["<<namechan[i]<<"]="<<esumchan[i]<<std::endl;
 	check+=esumchan[i];
       }
-      std::cout<<" check total energy desposit "<<check<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" check total energy desposit "<<check<<std::endl;
 
-      std::cout<<" total number of cherenkov is "<<ncertot<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" total number of cherenkov is "<<ncertot<<std::endl;
       check=0;
       for( int i=0;i<nchan;i++) {
-	std::cout<<"ncerenkov ["<<ichan[i]<<"]="<<ncerchan[i]<<std::endl;
+	if(ievt<SCEPRINT2) std::cout<<"ncerenkov ["<<namechan[i]<<"]="<<ncerchan[i]<<std::endl;
 	check+=ncerchan[i];
       }
-      std::cout<<" check ncerenkov "<<check<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" check ncerenkov "<<check<<std::endl;
 
 
-      std::cout<<" total number of scintillator is "<<nscinttot<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" total number of scintillator is "<<nscinttot<<std::endl;
       check=0;
       for( int i=0;i<nchan;i++) {
-	std::cout<<"nscintillator ["<<ichan[i]<<"]="<<nscintchan[i]<<std::endl;
+	if(ievt<SCEPRINT2) std::cout<<"nscintillator ["<<namechan[i]<<"]="<<nscintchan[i]<<std::endl;
 	check+=nscintchan[i];
       }
-      std::cout<<" check nscintillator "<<check<<std::endl;
+      if(ievt<SCEPRINT2) std::cout<<" check nscintillator "<<check<<std::endl;
 
 
     }  //end loop over events
