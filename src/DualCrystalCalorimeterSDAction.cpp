@@ -174,7 +174,9 @@ namespace dd4hep {
 
 	if ( track->GetCreatorProcess()->G4VProcess::GetProcessName() == "CerenkovPhys")  {
 	  if(SCEPRINT) std::cout<<" found cerenkov photon"<<std::endl;
-          if(((track->GetMaterial())->GetName())=="killMedia")
+	  std::string amedia = ((track->GetMaterial())->GetName());
+	  if(amedia.substr(0,2)=="kil")
+	    //if(((track->GetMaterial())->GetName())=="killMedia")
             {
               if(phstep>1) {  // don't count photons created in kill media
                 hit->ncerenkov+=1;
