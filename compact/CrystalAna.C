@@ -1,4 +1,3 @@
-
 #include "TROOT.h"
 #include "TFile.h"
 #include "TTree.h"
@@ -151,7 +150,7 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
 	// see ../src/DRCrystal_geo.cpp to see the assignments
 	int ihitchan=aecalhit->cellID;
-	int idet = (ihitchan & 0xF0)>>6;  // this assignment is made in SCEPCALConstants.xml
+	int idet = (ihitchan & 0xC0)>>6;  // this assignment is made in SCEPCALConstants.xml
 	int ilayer = (ihitchan & 0x38)>>3; // this is 1 for crystal and detectors, 0 for air around it
 	int islice = (ihitchan & 0x07);  //   this is 1 or 4 for photodetectors, 2 for crystal
 	// channels are 64 air
