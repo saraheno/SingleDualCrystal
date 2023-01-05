@@ -123,6 +123,9 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	float pz=agen->psz;
 	float mass=agen->mass;
 	float ee=sqrt(mass*mass+px*px+py*py+pz*pz);
+
+	if(i==0&&ievt<SCEPRINT2) std::cout" first particle pid energy are "<<agen-pdgID<<" "<<ee<<std::endl;
+
 	if(ee>mainee) {
 	  mainee=ee;
 	  if(ievt<SCEPRINT2) std::cout<<"highest e  gen now has pid "<<agen->pdgID<<" energy "<<ee<<std::endl;
