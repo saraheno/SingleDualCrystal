@@ -112,10 +112,31 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       if( nbyte>0) {
 	if(ievt<SCEPRINT2) std::cout<<gens->size()<<" Gen particles "<<std::endl;
       }
+      float mainee=-1;
       hgenPsize->Fill(gens->size());
       for(size_t i=0;i<gens->size(); ++i) {
         dd4hep::sim::Geant4Particle* agen =gens->at(i);
         hgenPdgID->Fill(agen->pdgID);
+
+	float px=agen->psx;
+	float py=agen->psy;
+	float pz=agen->psz;
+	float mass=agen->mass;
+	float ee=sqrt(mass*mass+px*px+py*py+pz*pz);
+	if(ee>mainee) {
+	  mainee=ee;
+	  if(ievt<SCEPRINT2) std::cout<<"highest e  gen now has pid "<<agen->pdgID<<" energy "<<ee<<std::endl;
+	}
+	float vsy=agen->vsy;
+	if(vsy>20) std::cout<<" pid "<<agen->pdgID<<" "
+			      <<"vs ("<<agen->vsx<<","<<agen->vsy<<","<<agen->vsz<<") "
+			      <<"ve ("<<agen->vex<<","<<agen->vey<<","<<agen->vez<<") "
+			      <<"ps ("<<agen->psx<<","<<agen->psy<<","<<agen->psz<<") "
+			      <<"pe ("<<agen->pex<<","<<agen->pey<<","<<agen->pez<<") "
+			      <<std::endl;
+
+
+
       }
 
 
