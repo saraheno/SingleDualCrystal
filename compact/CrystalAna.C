@@ -214,10 +214,10 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
         // get MC truth information about individual contributions to this hit
         Contributions zxzz=aecalhit->truth;
         float hacheck=0.;
-        for(size_t i=0;i<zxzz.size(); i++) {
+        for(size_t j=0;j<zxzz.size(); j++) {
           //      std::cout<<"testing truth truth number "<<i<<" with pdgID "<<(zxzz.at(i)).pdgID<<std::endl;
           // other member functions are trackID, deposit, time, length, x,y,z
-          hacheck+=(zxzz.at(i)).deposit;
+          hacheck+=(zxzz.at(j)).deposit;
         }
         if(i<SCEPRINT2) {
 	  std::cout<<"    difference between truth sum and total deposit is "<<hacheck-aecalhit->energyDeposit<<" where "<<aecalhit->energyDeposit<<" is the hit size."<<std::endl;
