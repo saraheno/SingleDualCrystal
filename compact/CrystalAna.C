@@ -27,6 +27,10 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
   typedef std::vector<dd4hep::sim::Geant4Particle*> GenParts;
   typedef std::vector<CalVision::DualCrystalCalorimeterHit*> CalHits;
+  typedef dd4hep::sim::Geant4HitData::MonteCarloContrib Contribution;
+  typedef std::vector<dd4hep::sim::Geant4HitData::MonteCarloContrib> Contributions;
+
+
 
   // read in libraries that define the classes
   Long_t result;
@@ -205,6 +209,20 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	  ncerchan[kchan]+=aecalhit->ncerenkov;
 	  nscintchan[kchan]+=aecalhit->nscintillator;
 	}
+
+
+        // get MC truth information about individual contributions to this hit
+        Contributions zxzz=aecalhit->truth;
+        float hacheck=0.;
+        for(size_t i=0;i<zxzz.size(); i++) {
+          //      std::cout<<"testing truth truth number "<<i<<" with pdgID "<<(zxzz.at(i)).pdgID<<std::endl;
+          // other member functions are trackID, deposit, time, length, x,y,z
+          hacheck+=(zxzz.at(i)).deposit;
+        }
+        if(i<SCEPRINT2) {
+	  std::cout<<"    difference between truth sum and total deposit is "<<hacheck-aecalhit->energyDeposit<<" where "<<aecalhit->energyDeposit<<" is the hit size."<<std::endl;
+          if(aecalhit->energyDeposit>0) std::cout<<"      percent diff is "<<(hacheck-aecalhit->energyDeposit)/aecalhit->energyDeposit<<std::endl;
+        }
 
 
       }  // end loop over hits
