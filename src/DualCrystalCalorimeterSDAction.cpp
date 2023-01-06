@@ -244,13 +244,13 @@ namespace dd4hep {
       //if(SCEPRINT) std::cout<<"NOT optical photon"<<std::endl;
 
         hit->energyDeposit += contrib.deposit;
-
+      hit->truth.emplace_back(contrib);
 
 
         //return true;
       }
 
-      hit->truth.emplace_back(contrib);
+
       mark(h.track);	
       return true;
 
