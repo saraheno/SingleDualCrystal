@@ -29,8 +29,8 @@ namespace CalVision {
   G4double fromEvToNm(G4double energy)
   {
     // there is some bug somewhere.  shouldn't need this factor
-    return 2.*CLHEP::pi*CLHEP::hbarc / energy*1000.;
-    //    return 1239.84187 / energy*1000.;
+
+    return 1239.84187 / energy*1000.;
 
   }
 
