@@ -5,6 +5,10 @@
     <constant name="world_z" value="world_side"/>
 
 
+    <constant name="tracker_region_rmax" value="200.0*m"/>
+    <constant name="tracker_region_zmax"   value="200.0*m"/>
+
+
     
  
 
