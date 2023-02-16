@@ -1,4 +1,4 @@
-rom DDSim.DD4hepSimulation import DD4hepSimulation
+from DDSim.DD4hepSimulation import DD4hepSimulation
 from g4units import mm, GeV, MeV
 SIM = DD4hepSimulation()
 
