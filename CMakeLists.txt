@@ -14,6 +14,10 @@
 #==========================================================================
 cmake_minimum_required(VERSION 3.12 FATAL_ERROR)
 
+SET(PackageName SingleDualCrystal)
+
+PROJECT(${PackageName})
+
 IF(NOT TARGET DD4hep::DDCore)
   find_package ( DD4hep REQUIRED )
   include ( ${DD4hep_DIR}/cmake/DD4hep.cmake )
@@ -99,3 +103,4 @@ install(DIRECTORY data eve scripts DESTINATION ${CMAKE_INSTALL_PREFIX}/examples/
 #
 #
 #
+dd4hep_instantiate_package(${PackageName})
