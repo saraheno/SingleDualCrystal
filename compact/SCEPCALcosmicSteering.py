@@ -266,7 +266,7 @@ def exampleUserPlugin(dd4hepSimulation):
          # CRYEventReader is the actual plugin, steeringFile its constructor parameter
          gen.Input = 'CRYEventReader|' + 'steeringFile'
          # we can give a dictionary of Parameters that has to be interpreted by the setParameters function of the plugin
-         gen.Parameters = {'DataFilePath': '/path/to/files/data'}
+         gen.Parameters = {'DataFilePath': '../DDCry/cry/data'}
          gen.enableUI()
          return gen
 ## 
