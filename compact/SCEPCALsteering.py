@@ -337,9 +337,9 @@ def exampleUserPlugin(dd4hepSimulation):
      evt_root.Control = True
      if not dd.outputFile.endswith(dd.outputConfig.myExtension):
           output = dd.outputFile + dd.outputConfig.myExtension
-          evt_root.Output = output
-          evt_root.enableUI()
-          Kernel().eventAction().add(evt_root)
+     evt_root.Output = output
+#     evt_root.enableUI()
+     Kernel().eventAction().add(evt_root)
      return None
 SIM.outputConfig.userOutputPlugin = exampleUserPlugin
 SIM.outputConfig.myExtension = '.root'
