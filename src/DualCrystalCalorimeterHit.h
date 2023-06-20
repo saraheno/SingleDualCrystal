@@ -53,8 +53,13 @@ namespace CalVision {
     float wavelenmin=300;
     float wavelenmax=1000;
     int nbin=wavelengthnbin;
+    float timemin=0;
+    float timemax=10;
     std::array<int,wavelengthnbin>  ncerwave;
     std::array<int,wavelengthnbin> nscintwave;
+    std::array<int,wavelengthnbin>  ncertime;
+    std::array<int,wavelengthnbin> nscinttime;
+
 
 
 
@@ -67,6 +72,8 @@ namespace CalVision {
       for( int i=0;i<nbin;i++){
 	ncerwave[i]=0;
 	nscintwave[i]=0;
+	ncertime[i]=0;
+	nscinttime[i]=0;
       }
 
 }

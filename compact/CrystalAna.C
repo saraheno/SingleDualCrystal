@@ -68,6 +68,16 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hcEcalE2 = new TH1F("hcEcalE2","energy chan 2",100,0.,10000);
   TH1F *hcEcalE3 = new TH1F("hcEcalE3","energy chan 3",100,0.,10000);
 
+
+
+  TH1F *hcerwave = new TH1F("hcerwave","cerenkov wavelength",1000,0.,1000.);
+  TH1F *hscintwave = new TH1F("hscintwave","scintillator wavelength",1000,0.,1000.);
+  TH1F *hcertime = new TH1F("hcertime","cerenkov time",1000,0.,1000.);
+  TH1F *hscinttime = new TH1F("hscinttime","scintillator time",1000,0.,1000.);
+
+
+
+
   // open data and output file for histograms
 
   //  const char* inputfilename="/data/users/eno/dd4hep/DD4hep/DDDetectors/compact/testSid.root";
@@ -190,10 +200,15 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
 	// print out wavelength spectra
 	int ijchan=aecalhit->nbin;
-	//	for (int j=0;j<ijchan;j++) {
+	for (int j=0;j<ijchan;j++) {
 	//std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
 	//std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
-	//}
+	  hcerwave->AddBinContent(j,(aecalhit->ncerwave)[j]);
+	  hscintwave->AddBinContent(j,(aecalhit->nscintwave)[j]);
+
+	  hcertime->AddBinContent(j,(aecalhit->ncertime)[j]);
+	  hscinttime->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	}
 	hchan->Fill(aecalhit->cellID);
 
       // there is a better way to do this
@@ -286,6 +301,10 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   hcEcalncer1->Write();
   hcEcalncer2->Write();
   hcEcalncer3->Write();
+  hcerwave->Write();
+  hscintwave->Write();
+  hcertime->Write();
+  hscinttime->Write();
   out->Close();
 
 }

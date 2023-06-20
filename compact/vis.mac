@@ -58,7 +58,7 @@
 # To draw only specific particles:
 /vis/filtering/trajectories/create/particleFilter
 #/vis/filtering/trajectories/particleFilter-0/add geantino
-#/vis/filtering/trajectories/particleFilter-0/add pi-
+/vis/filtering/trajectories/particleFilter-0/add pi-
 /vis/filtering/trajectories/particleFilter-0/add e-
 /vis/filtering/trajectories/particleFilter-0/add e+
 /vis/filtering/trajectories/particleFilter-0/add opticalphoton

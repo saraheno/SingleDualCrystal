@@ -74,6 +74,7 @@ namespace dd4hep {
 
 
       bool SCEPRINT=(SCECOUNT<100);
+      //SCEPRINT=TRUE;
       //if(SCEPRINT) std::cout<<"scecount is "<<SCECOUNT<<" print is "<<SCEPRINT<<std::endl;
 
 
@@ -83,7 +84,9 @@ namespace dd4hep {
       //      const G4ThreeVector &thePrePosition = thePrePoint->GetPosition();
       //const G4ThreeVector &thePostPosition = thePostPoint->GetPosition();
       G4VPhysicalVolume *thePrePV = thePrePoint->GetPhysicalVolume();
+      G4double pretime = thePrePoint->GetGlobalTime();
       G4VPhysicalVolume *thePostPV = thePostPoint->GetPhysicalVolume();
+      G4double posttime = thePostPoint->GetGlobalTime();
       G4String thePrePVName = "";
       if (thePrePV)
 	thePrePVName = thePrePV->GetName();
@@ -170,6 +173,14 @@ namespace dd4hep {
 	int ibin=-1;
 	float binsize=(hit->wavelenmax-hit->wavelenmin)/hit->nbin;
 	ibin = (wavelength-hit->wavelenmin)/binsize;
+
+
+	float avearrival=(pretime+posttime)/2.;
+	int jbin=-1;
+	float tbinsize=(hit->timemax-hit->timemin)/hit->nbin;
+	jbin = (avearrival-hit->timemin)/tbinsize;
+
+
 	int phstep = track->GetCurrentStepNumber();
 
 	
@@ -184,6 +195,9 @@ namespace dd4hep {
               if(phstep>1) {  // don't count photons created in kill media
                 hit->ncerenkov+=1;
                 if(ibin>-1&&ibin<hit->nbin) ((hit->ncerwave).at(ibin))+=1;
+                if(jbin>-1&&jbin<hit->nbin) ((hit->ncertime).at(jbin))+=1;
+		if(SCEPRINT) std::cout<<" cer photon kill pre time "<<pretime<<std::endl;
+		if(SCEPRINT) std::cout<<" cer photon kill post time "<<posttime<<std::endl;
               }
               track->SetTrackStatus(fStopAndKill);}
           else {
@@ -203,6 +217,10 @@ namespace dd4hep {
 	      if(phstep>1) {
 		hit->nscintillator+=1;
 		if((ibin>-1)&&(ibin<hit->nbin)) ((hit->nscintwave).at(ibin))+=1;
+                if(jbin>-1&&jbin<hit->nbin) ((hit->nscinttime).at(jbin))+=1;
+		if(SCEPRINT) std::cout<<" scint photon kill pre time "<<pretime<<std::endl;
+		if(SCEPRINT) std::cout<<" scint photon kill post time "<<posttime<<std::endl;
+
 	      }
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
