@@ -48,9 +48,11 @@ SCEGeant4Output2ROOT::SCEGeant4Output2ROOT(Geant4Context* ctxt, const string& na
 
 /// Default destructor
 SCEGeant4Output2ROOT::~SCEGeant4Output2ROOT() {
+  std::cout<<"in scegeant4output2root 2 a"<<std::endl;
   closeOutput();
-  std::cout<<"in scegeant4output2root 2"<<std::endl;
+  std::cout<<"in scegeant4output2root 2 b"<<std::endl;
   InstanceCount::decrement(this);
+  std::cout<<"in scegeant4output2root 2 c"<<std::endl;
 }
 
 /// Close current output file
@@ -60,6 +62,7 @@ void SCEGeant4Output2ROOT::closeOutput()   {
     TDirectory::TContext ctxt(m_file);
     Sections::iterator i = m_sections.find(m_section);
     info("+++ Closing ROOT output file %s", m_file->GetName());
+    std::cout<<"Closing ROOT output file "<<m_file->GetName()<<std::endl;
     if ( i != m_sections.end() )
       m_sections.erase(i);
     m_branches.clear();

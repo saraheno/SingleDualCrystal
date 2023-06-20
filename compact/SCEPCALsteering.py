@@ -333,12 +333,12 @@ def exampleUserPlugin(dd4hepSimulation):
      from DDG4 import EventAction, Kernel
      dd = dd4hepSimulation  
      evt_root = EventAction(Kernel(), 'SCEGeant4Output2ROOT/' + dd.outputFile, True)
-     evt_root.HandleMCTruth = True 
+#     evt_root.HandleMCTruth = TRUE
      evt_root.Control = True
      if not dd.outputFile.endswith(dd.outputConfig.myExtension):
           output = dd.outputFile + dd.outputConfig.myExtension
-     evt_root.Output = output
-#     evt_root.enableUI()
+     #evt_root.Output = output
+     evt_root.enableUI()
      Kernel().eventAction().add(evt_root)
      return None
 SIM.outputConfig.userOutputPlugin = exampleUserPlugin
