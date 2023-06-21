@@ -74,7 +74,6 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hscintwave = new TH1F("hscintwave","scintillator wavelength",1000,0.,1000.);
   TH1F *hcertime = new TH1F("hcertime","cerenkov time",1000,0.,1000.);
   TH1F *hscinttime = new TH1F("hscinttime","scintillator time",1000,0.,1000.);
-
   TH2F *hcerxy = new TH2F("hcerxy","x y hit position",40,0.,40.,40,0.,40.);
   TH2F *hscintxy = new TH2F("hscintxy","x y hit position",40,0.,40.,40,0.,40.);
 

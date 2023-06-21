@@ -333,7 +333,7 @@ def exampleUserPlugin(dd4hepSimulation):
      from DDG4 import EventAction, Kernel
      dd = dd4hepSimulation  
      evt_root = EventAction(Kernel(), 'SCEGeant4Output2ROOT/' + dd.outputFile, True)
-     evt_root.HandleMCTruth = TRUE
+     evt_root.HandleMCTruth = True
      evt_root.Control = True
      output = dd.outputFile
      if not dd.outputFile.endswith(dd.outputConfig.myExtension):

@@ -42,9 +42,9 @@ the assembled tower is a Stave
 
  <staves vis="Invisible"/>
 <layer repeat="1" vis="Invisible">
-      <slice material = "killMedia" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <slice material = "killMedia1" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
       <slice material = "E_PbWO4" thickness = "DRcrystallength" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/>
-      <slice material = "killMedia" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <slice material = "killMedia2" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
 </layer>
     </detector>
   </detectors>
