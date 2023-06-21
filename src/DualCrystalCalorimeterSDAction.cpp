@@ -171,14 +171,25 @@ namespace dd4hep {
 
 	float wavelength=fromEvToNm(track->GetTotalEnergy()/eV);
 	int ibin=-1;
-	float binsize=(hit->wavelenmax-hit->wavelenmin)/hit->nbin;
+	float binsize=(hit->wavelenmax-hit->wavelenmin)/hit->nfinebin;
 	ibin = (wavelength-hit->wavelenmin)/binsize;
 
 
 	float avearrival=(pretime+posttime)/2.;
 	int jbin=-1;
-	float tbinsize=(hit->timemax-hit->timemin)/hit->nbin;
+	float tbinsize=(hit->timemax-hit->timemin)/hit->nfinebin;
 	jbin = (avearrival-hit->timemin)/tbinsize;
+
+
+	int xbin=-1;
+	float xbinsize=(hit->xmax-hit->xmin)/hit->ncoarsebin;
+	xbin = (thePrePoint->GetPosition().x()-hit->xmin)/xbinsize;
+
+
+	int ybin=-1;
+	float ybinsize=(hit->ymax-hit->ymin)/hit->ncoarsebin;
+	ybin = (thePrePoint->GetPosition().y()-hit->ymin)/ybinsize;
+
 
 
 	int phstep = track->GetCurrentStepNumber();
@@ -194,8 +205,9 @@ namespace dd4hep {
 	      if(SCEPRINT) std::cout<<"killing photon"<<std::endl;
               if(phstep>1) {  // don't count photons created in kill media
                 hit->ncerenkov+=1;
-                if(ibin>-1&&ibin<hit->nbin) ((hit->ncerwave).at(ibin))+=1;
-                if(jbin>-1&&jbin<hit->nbin) ((hit->ncertime).at(jbin))+=1;
+                if(ibin>-1&&ibin<hit->nfinebin) ((hit->ncerwave).at(ibin))+=1;
+                if(jbin>-1&&jbin<hit->nfinebin) ((hit->ncertime).at(jbin))+=1;
+		if(( xbin>-1&&xbin<hit->ncoarsebin)&&(ybin>-1&&ybin<hit->ncoarsebin)) ((hit->cerhitpos).at(xbin).at(ybin))+=1;
 		if(SCEPRINT) std::cout<<" cer photon kill pre time "<<pretime<<std::endl;
 		if(SCEPRINT) std::cout<<" cer photon kill post time "<<posttime<<std::endl;
               }
@@ -216,8 +228,10 @@ namespace dd4hep {
 	      if(SCEPRINT) std::cout<<"killing photon"<<std::endl;
 	      if(phstep>1) {
 		hit->nscintillator+=1;
-		if((ibin>-1)&&(ibin<hit->nbin)) ((hit->nscintwave).at(ibin))+=1;
-                if(jbin>-1&&jbin<hit->nbin) ((hit->nscinttime).at(jbin))+=1;
+		if((ibin>-1)&&(ibin<hit->nfinebin)) ((hit->nscintwave).at(ibin))+=1;
+                if(jbin>-1&&jbin<hit->nfinebin) ((hit->nscinttime).at(jbin))+=1;
+		if(( xbin>-1&&xbin<hit->ncoarsebin)&&(ybin>-1&&ybin<hit->ncoarsebin)) ((hit->scinthitpos).at(xbin).at(ybin))+=1;
+
 		if(SCEPRINT) std::cout<<" scint photon kill pre time "<<pretime<<std::endl;
 		if(SCEPRINT) std::cout<<" scint photon kill post time "<<posttime<<std::endl;
 

@@ -75,7 +75,8 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hcertime = new TH1F("hcertime","cerenkov time",1000,0.,1000.);
   TH1F *hscinttime = new TH1F("hscinttime","scintillator time",1000,0.,1000.);
 
-
+  TH2F *hcerxy = new TH2F("hcerxy","x y hit position",40,0.,40.,40,0.,40.);
+  TH2F *hscintxy = new TH2F("hscintxy","x y hit position",40,0.,40.,40,0.,40.);
 
 
   // open data and output file for histograms
@@ -199,16 +200,27 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 
 
 	// print out wavelength spectra
-	int ijchan=aecalhit->nbin;
+	int ijchan=aecalhit->nfinebin;
 	for (int j=0;j<ijchan;j++) {
 	//std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
 	//std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
-	  hcerwave->AddBinContent(j,(aecalhit->ncerwave)[j]);
-	  hscintwave->AddBinContent(j,(aecalhit->nscintwave)[j]);
+	  hcerwave->Fill(j,(aecalhit->ncerwave)[j]);
+	  hscintwave->Fill(j,(aecalhit->nscintwave)[j]);
 
-	  hcertime->AddBinContent(j,(aecalhit->ncertime)[j]);
-	  hscinttime->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	  hcertime->Fill(j,(aecalhit->ncertime)[j]);
+	  hscinttime->Fill(j,(aecalhit->nscinttime)[j]);
+
 	}
+
+	for (int j=0;j<aecalhit->ncoarsebin;j++){
+	  for (int k=0;k<aecalhit->ncoarsebin;k++){
+	    hcerxy->Fill(j,k,(aecalhit->cerhitpos)[j][k]);	    
+	    hscintxy->Fill(j,k,(aecalhit->scinthitpos)[j][k]);
+
+	  }
+	}
+
+
 	hchan->Fill(aecalhit->cellID);
 
       // there is a better way to do this
@@ -305,6 +317,8 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   hscintwave->Write();
   hcertime->Write();
   hscinttime->Write();
+  hcerxy->Write();
+  hscintxy->Write();
   out->Close();
 
 }

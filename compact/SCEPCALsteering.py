@@ -335,6 +335,7 @@ def exampleUserPlugin(dd4hepSimulation):
      evt_root = EventAction(Kernel(), 'SCEGeant4Output2ROOT/' + dd.outputFile, True)
      evt_root.HandleMCTruth = TRUE
      evt_root.Control = True
+     output = dd.outputFile
      if not dd.outputFile.endswith(dd.outputConfig.myExtension):
           output = dd.outputFile + dd.outputConfig.myExtension
      evt_root.Output = output
