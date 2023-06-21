@@ -59,7 +59,7 @@ void Overlay()
 
 
   std::cout<<"getting first"<<std::endl;
-  TH1F *A_pt = static_cast<TH1F*>(f1->Get("hcertime")->Clone());
+  TH1F *A_pt = static_cast<TH1F*>(f1->Get("hcertime3")->Clone());
   A_pt->SetDirectory(0);
   double aaA = A_pt->Integral();
   std::cout<<" first entries is "<<aaA<<std::endl;
@@ -67,7 +67,7 @@ void Overlay()
 
 
   std::cout<<"getting second"<<std::endl;
-  TH1F *B_pt = static_cast<TH1F*>(f1->Get("hscinttime")->Clone());
+  TH1F *B_pt = static_cast<TH1F*>(f1->Get("hscinttime3")->Clone());
   B_pt->SetDirectory(0);
   double aaB = B_pt->Integral();
   std::cout<<" second entries is "<<aaB<<std::endl;
@@ -87,7 +87,7 @@ void Overlay()
   A_pt->SetLineColor(3);
   A_pt->SetLineWidth(3);
   A_pt->SetStats(0);
-  A_pt->Draw("");
+  A_pt->Draw("HIST");
 
 
 
@@ -96,7 +96,7 @@ void Overlay()
   B_pt->SetStats(0);
 
   //B_pt->Draw("esame");
-  B_pt->Draw("same");
+  B_pt->Draw("HIST same");
 
   canv->Update();
   canv->RedrawAxis();
