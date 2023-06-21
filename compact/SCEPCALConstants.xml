@@ -13,6 +13,7 @@
  
 
     <constant name="DRcrystalwidth" value="1.0*cm"/>
+<!--    <constant name="DRcrystallength" value="21.*cm"/> -->
     <constant name="DRcrystallength" value="21.*cm"/>
 
     

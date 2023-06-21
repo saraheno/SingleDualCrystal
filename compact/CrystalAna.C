@@ -58,6 +58,7 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hchan = new TH1F("hchan","channel ID number",1028,0.,1028);
   TH1F *hcEcalE = new TH1F("hcEcalE","sum crystal ecal energy",100,0.,100.);
   TH1F *hcEcalncer = new TH1F("hcEcalncer","total number of cerenkov",100,0.,10000);
+
   TH1F *hcEcalncer0 = new TH1F("hcEcalncer0","total number of cerenkov chan 0",100,0.,10000);
   TH1F *hcEcalncer1 = new TH1F("hcEcalncer1","total number of cerenkov chan 1",100,0.,10000);
   TH1F *hcEcalncer2 = new TH1F("hcEcalncer2","total number of cerenkov chan 2",100,0.,10000);
@@ -68,35 +69,33 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hcEcalE2 = new TH1F("hcEcalE2","energy chan 2",100,0.,10000);
   TH1F *hcEcalE3 = new TH1F("hcEcalE3","energy chan 3",100,0.,10000);
 
+  TH1F *hcerwave0 = new TH1F("hcerwave0","cerenkov wavelength",1000,300.,1000.);
+  TH1F *hscintwave0 = new TH1F("hscintwave0","scintillator wavelength",1000,300.,1000.);
+  TH1F *hcertime0 = new TH1F("hcertime0","cerenkov time",1000,0.,20.);
+  TH1F *hscinttime0 = new TH1F("hscinttime0","scintillator time",1000,0.,20.);
+  TH2F *hcerxy0 = new TH2F("hcerxy0","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH2F *hscintxy0 = new TH2F("hscintxy0","x y hit position",40,-10.,10.,40,-10.,10.);
 
+  TH1F *hcerwave1 = new TH1F("hcerwave1","cerenkov wavelength",1000,300.,1000.);
+  TH1F *hscintwave1 = new TH1F("hscintwave1","scintillator wavelength",1000,300.,1000.);
+  TH1F *hcertime1 = new TH1F("hcertime1","cerenkov time",1000,0.,20.);
+  TH1F *hscinttime1 = new TH1F("hscinttime1","scintillator time",1000,0.,20.);
+  TH2F *hcerxy1 = new TH2F("hcerxy1","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH2F *hscintxy1 = new TH2F("hscintxy1","x y hit position",40,-10.,10.,40,0-1.,10.);
 
-  TH1F *hcerwave0 = new TH1F("hcerwave0","cerenkov wavelength",1000,0.,1000.);
-  TH1F *hscintwave0 = new TH1F("hscintwave0","scintillator wavelength",1000,0.,1000.);
-  TH1F *hcertime0 = new TH1F("hcertime0","cerenkov time",1000,0.,1000.);
-  TH1F *hscinttime0 = new TH1F("hscinttime0","scintillator time",1000,0.,1000.);
-  TH2F *hcerxy0 = new TH2F("hcerxy0","x y hit position",40,0.,40.,40,0.,40.);
-  TH2F *hscintxy0 = new TH2F("hscintxy0","x y hit position",40,0.,40.,40,0.,40.);
+  TH1F *hcerwave2 = new TH1F("hcerwave2","cerenkov wavelength",1000,300.,1000.);
+  TH1F *hscintwave2 = new TH1F("hscintwave2","scintillator wavelength",1000,300.,1000.);
+  TH1F *hcertime2 = new TH1F("hcertime2","cerenkov time",1000,0.,20.);
+  TH1F *hscinttime2 = new TH1F("hscinttime2","scintillator time",1000,0.,20.);
+  TH2F *hcerxy2 = new TH2F("hcerxy2","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH2F *hscintxy2 = new TH2F("hscintxy2","x y hit position",40,-10.,10.,40,-10.,10.);
 
-  TH1F *hcerwave1 = new TH1F("hcerwave1","cerenkov wavelength",1000,0.,1000.);
-  TH1F *hscintwave1 = new TH1F("hscintwave1","scintillator wavelength",1000,0.,1000.);
-  TH1F *hcertime1 = new TH1F("hcertime1","cerenkov time",1000,0.,1000.);
-  TH1F *hscinttime1 = new TH1F("hscinttime1","scintillator time",1000,0.,1000.);
-  TH2F *hcerxy1 = new TH2F("hcerxy1","x y hit position",40,0.,40.,40,0.,40.);
-  TH2F *hscintxy1 = new TH2F("hscintxy1","x y hit position",40,0.,40.,40,0.,40.);
-
-  TH1F *hcerwave2 = new TH1F("hcerwave2","cerenkov wavelength",1000,0.,1000.);
-  TH1F *hscintwave2 = new TH1F("hscintwave2","scintillator wavelength",1000,0.,1000.);
-  TH1F *hcertime2 = new TH1F("hcertime2","cerenkov time",1000,0.,1000.);
-  TH1F *hscinttime2 = new TH1F("hscinttime2","scintillator time",1000,0.,1000.);
-  TH2F *hcerxy2 = new TH2F("hcerxy2","x y hit position",40,0.,40.,40,0.,40.);
-  TH2F *hscintxy2 = new TH2F("hscintxy2","x y hit position",40,0.,40.,40,0.,40.);
-
-  TH1F *hcerwave3 = new TH1F("hcerwave3","cerenkov wavelength",1000,0.,1000.);
-  TH1F *hscintwave3 = new TH1F("hscintwave3","scintillator wavelength",1000,0.,1000.);
-  TH1F *hcertime3 = new TH1F("hcertime3","cerenkov time",1000,0.,1000.);
-  TH1F *hscinttime3 = new TH1F("hscinttime3","scintillator time",1000,0.,1000.);
-  TH2F *hcerxy3 = new TH2F("hcerxy3","x y hit position",40,0.,40.,40,0.,40.);
-  TH2F *hscintxy3 = new TH2F("hscintxy3","x y hit position",40,0.,40.,40,0.,40.);
+  TH1F *hcerwave3 = new TH1F("hcerwave3","cerenkov wavelength",1000,300.,1000.);
+  TH1F *hscintwave3 = new TH1F("hscintwave3","scintillator wavelength",1000,300.,1000.);
+  TH1F *hcertime3 = new TH1F("hcertime3","cerenkov time",1000,0.,20.);
+  TH1F *hscinttime3 = new TH1F("hscinttime3","scintillator time",1000,0.,20.);
+  TH2F *hcerxy3 = new TH2F("hcerxy3","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH2F *hscintxy3 = new TH2F("hscintxy3","x y hit position",40,-10.,10.,40,-10.,10.);
 
 
   // open data and output file for histograms
@@ -137,7 +136,7 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
     b_ecal->SetAddress(&ecalhits);
 
 
-    int SCEPRINT2=10;
+    int SCEPRINT2=20;
     for(int ievt=0;ievt<num_evt; ++ievt) {
       std::cout<<std::endl<<std::endl<<"event number is "<<ievt<<std::endl;
 
@@ -159,19 +158,19 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	float mass=agen->mass;
 	float ee=sqrt(mass*mass+px*px+py*py+pz*pz);
 
-	if(i==0&&ievt<SCEPRINT2) std::cout<<" first particle pid energy are "<<agen->pdgID<<" "<<ee<<std::endl;
+	//	if(i==0&&ievt<SCEPRINT2) std::cout<<" first particle pid energy are "<<agen->pdgID<<" "<<ee<<std::endl;
 
 	if(ee>mainee) {
 	  mainee=ee;
-	  if(ievt<SCEPRINT2) std::cout<<"highest e  gen now has pid "<<agen->pdgID<<" energy "<<ee<<std::endl;
+	  //	  if(ievt<SCEPRINT2) std::cout<<"highest e  gen now has pid "<<agen->pdgID<<" energy "<<ee<<std::endl;
 	}
 	float vsy=agen->vsy;
-	if(vsy>20) std::cout<<" pid "<<agen->pdgID<<" "
-			      <<"vs ("<<agen->vsx<<","<<agen->vsy<<","<<agen->vsz<<") "
-			      <<"ve ("<<agen->vex<<","<<agen->vey<<","<<agen->vez<<") "
-			      <<"ps ("<<agen->psx<<","<<agen->psy<<","<<agen->psz<<") "
-			      <<"pe ("<<agen->pex<<","<<agen->pey<<","<<agen->pez<<") "
-			      <<std::endl;
+	//	if(vsy>20) std::cout<<" pid "<<agen->pdgID<<" "
+	//		      <<"vs ("<<agen->vsx<<","<<agen->vsy<<","<<agen->vsz<<") "
+	//		      <<"ve ("<<agen->vex<<","<<agen->vey<<","<<agen->vez<<") "
+	//		      <<"ps ("<<agen->psx<<","<<agen->psy<<","<<agen->psz<<") "
+	//		      <<"pe ("<<agen->pex<<","<<agen->pey<<","<<agen->pez<<") "
+	//		      <<std::endl;
 
 
 
@@ -234,28 +233,28 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	//std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
 	//std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
 	  if(kchan==0) {
-	    hcerwave0->Fill(j,(aecalhit->ncerwave)[j]);
-	    hscintwave0->Fill(j,(aecalhit->nscintwave)[j]);
-	    hcertime0->Fill(j,(aecalhit->ncertime)[j]);
-	    hscinttime0->Fill(j,(aecalhit->nscinttime)[j]);
+	    hcerwave0->AddBinContent(j,(aecalhit->ncerwave)[j]);
+	    hscintwave0->AddBinContent(j,(aecalhit->nscintwave)[j]);
+	    hcertime0->AddBinContent(j,(aecalhit->ncertime)[j]);
+	    hscinttime0->AddBinContent(j,(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==1) {
-	    hcerwave1->Fill(j,(aecalhit->ncerwave)[j]);
-	    hscintwave1->Fill(j,(aecalhit->nscintwave)[j]);
-	    hcertime1->Fill(j,(aecalhit->ncertime)[j]);
-	    hscinttime1->Fill(j,(aecalhit->nscinttime)[j]);
+	    hcerwave1->AddBinContent(j,(aecalhit->ncerwave)[j]);
+	    hscintwave1->AddBinContent(j,(aecalhit->nscintwave)[j]);
+	    hcertime1->AddBinContent(j,(aecalhit->ncertime)[j]);
+	    hscinttime1->AddBinContent(j,(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==2) {
-	    hcerwave2->Fill(j,(aecalhit->ncerwave)[j]);
-	    hscintwave2->Fill(j,(aecalhit->nscintwave)[j]);
-	    hcertime2->Fill(j,(aecalhit->ncertime)[j]);
-	    hscinttime2->Fill(j,(aecalhit->nscinttime)[j]);
+	    hcerwave2->AddBinContent(j,(aecalhit->ncerwave)[j]);
+	    hscintwave2->AddBinContent(j,(aecalhit->nscintwave)[j]);
+	    hcertime2->AddBinContent(j,(aecalhit->ncertime)[j]);
+	    hscinttime2->AddBinContent(j,(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==3) {
-	    hcerwave3->Fill(j,(aecalhit->ncerwave)[j]);
-	    hscintwave3->Fill(j,(aecalhit->nscintwave)[j]);
-	    hcertime3->Fill(j,(aecalhit->ncertime)[j]);
-	    hscinttime3->Fill(j,(aecalhit->nscinttime)[j]);
+	    hcerwave3->AddBinContent(j,(aecalhit->ncerwave)[j]);
+	    hscintwave3->AddBinContent(j,(aecalhit->nscintwave)[j]);
+	    hcertime3->AddBinContent(j,(aecalhit->ncertime)[j]);
+	    hscinttime3->AddBinContent(j,(aecalhit->nscinttime)[j]);
 	  }
 
 	}
@@ -263,20 +262,20 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	for (int j=0;j<aecalhit->ncoarsebin;j++){
 	  for (int k=0;k<aecalhit->ncoarsebin;k++){
 	    if(kchan==0) {
-	      hcerxy0->Fill(j,k,(aecalhit->cerhitpos)[j][k]);	    
-	      hscintxy0->Fill(j,k,(aecalhit->scinthitpos)[j][k]);
+	      hcerxy0->SetBinContent(j,k,hcerxy0->GetBinContent(j,k)+(aecalhit->cerhitpos)[j][k]);	    
+	      hscintxy0->SetBinContent(j,k,hscintxy0->GetBinContent(j,k)+(aecalhit->scinthitpos)[j][k]);
 	    }
 	    else if(kchan==1) {
-	      hcerxy1->Fill(j,k,(aecalhit->cerhitpos)[j][k]);	    
-	      hscintxy1->Fill(j,k,(aecalhit->scinthitpos)[j][k]);
+	      hcerxy1->SetBinContent(j,k,hcerxy1->GetBinContent(j,k)+(aecalhit->cerhitpos)[j][k]);	    
+	      hscintxy1->SetBinContent(j,k,hscintxy1->GetBinContent(j,k)+(aecalhit->scinthitpos)[j][k]);
 	    }
 	    else if(kchan==2) {
-	      hcerxy2->Fill(j,k,(aecalhit->cerhitpos)[j][k]);	    
-	      hscintxy2->Fill(j,k,(aecalhit->scinthitpos)[j][k]);
+	      hcerxy2->SetBinContent(j,k,hcerxy2->GetBinContent(j,k)+(aecalhit->cerhitpos)[j][k]);	    
+	      hscintxy2->SetBinContent(j,k,hscintxy2->GetBinContent(j,k)+(aecalhit->scinthitpos)[j][k]);
 	    }
 	    else if(kchan==3) {
-	      hcerxy3->Fill(j,k,(aecalhit->cerhitpos)[j][k]);	    
-	      hscintxy3->Fill(j,k,(aecalhit->scinthitpos)[j][k]);
+	      hcerxy3->SetBinContent(j,k,hcerxy3->GetBinContent(j,k)+(aecalhit->cerhitpos)[j][k]);	    
+	      hscintxy3->SetBinContent(j,k,hscintxy3->GetBinContent(j,k)+(aecalhit->scinthitpos)[j][k]);
 	    }
 
 	  }
@@ -312,7 +311,7 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
       }  // end loop over hits
 
     
-      hcEcalE->Fill(esum/1000.);
+      hcEcalE->Fill(esum);
       hcEcalncer->Fill(ncertot);
       hcEcalncer0->Fill(ncerchan[0]);
       hcEcalncer1->Fill(ncerchan[1]);
@@ -364,7 +363,15 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TFile * out = new TFile(outputfilename,"RECREATE");
   hgenPsize->Write();
   hgenPdgID->Write();
+
   hcEcalE->Write();
+  hcEcalE0->Write();
+  hcEcalE1->Write();
+  hcEcalE2->Write();
+  hcEcalE3->Write();
+
+
+
   hcEcalncer->Write();
   hcEcalncer0->Write();
   hcEcalncer1->Write();

@@ -7,7 +7,7 @@ void Overlay()
   char* atitle = "timing weird units";
 
 
-  TFile *f1 = new TFile("./hist.root");
+  TFile *f1 = new TFile("./hist5cm.root");
 
 
   gStyle->SetOptStat(0);
@@ -63,7 +63,7 @@ void Overlay()
   A_pt->SetDirectory(0);
   double aaA = A_pt->Integral();
   std::cout<<" first entries is "<<aaA<<std::endl;
-  A_pt->Scale(1./aaA);
+  //A_pt->Scale(1./aaA);
 
 
   std::cout<<"getting second"<<std::endl;
@@ -71,13 +71,13 @@ void Overlay()
   B_pt->SetDirectory(0);
   double aaB = B_pt->Integral();
   std::cout<<" second entries is "<<aaB<<std::endl;
-  B_pt->Scale(1/aaB);
+  //B_pt->Scale(1/aaB);
 
 
   float max = std::max(A_pt->GetMaximum(),B_pt->GetMaximum());
   A_pt->SetMaximum(max*1.3);
 
-  A_pt->GetYaxis()->SetTitle("percent ");
+  A_pt->GetYaxis()->SetTitle("counts ");
   A_pt->GetYaxis()->SetTitleSize(0.05);
   A_pt->GetXaxis()->SetTitle(atitle);
   A_pt->GetXaxis()->SetTitleSize(0.05);
