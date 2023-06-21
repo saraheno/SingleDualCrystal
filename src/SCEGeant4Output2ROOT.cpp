@@ -42,22 +42,22 @@ SCEGeant4Output2ROOT::SCEGeant4Output2ROOT(Geant4Context* ctxt, const string& na
   declareProperty("DisabledCollections",  m_disabledCollections);
   declareProperty("DisableParticles",     m_disableParticles);
   declareProperty("FilesByRun",           m_filesByRun = false);
-  std::cout<<"in scegeant4output2root 1"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 1"<<std::endl;
   InstanceCount::increment(this);
 }
 
 /// Default destructor
 SCEGeant4Output2ROOT::~SCEGeant4Output2ROOT() {
-  std::cout<<"in scegeant4output2root 2 a"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 2 a"<<std::endl;
   closeOutput();
-  std::cout<<"in scegeant4output2root 2 b"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 2 b"<<std::endl;
   InstanceCount::decrement(this);
-  std::cout<<"in scegeant4output2root 2 c"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 2 c"<<std::endl;
 }
 
 /// Close current output file
 void SCEGeant4Output2ROOT::closeOutput()   {
-  std::cout<<"in scegeant4output2root 3"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 3"<<std::endl;
   if (m_file) {
     TDirectory::TContext ctxt(m_file);
     Sections::iterator i = m_sections.find(m_section);
@@ -75,7 +75,7 @@ void SCEGeant4Output2ROOT::closeOutput()   {
 
 /// Create/access tree by name
 TTree* SCEGeant4Output2ROOT::section(const string& nam) {
-  std::cout<<"in scegeant4output2root 4"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 4"<<std::endl;
 
   Sections::const_iterator i = m_sections.find(nam);
   if (i == m_sections.end()) {
@@ -89,7 +89,7 @@ TTree* SCEGeant4Output2ROOT::section(const string& nam) {
 
 /// Callback to store the Geant4 run information
 void SCEGeant4Output2ROOT::beginRun(const G4Run* run) {
-  std::cout<<"in scegeant4output2root 5"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 5"<<std::endl;
   string fname = m_output;
   if ( m_filesByRun )    {
     size_t idx = m_output.rfind(".");
@@ -115,7 +115,7 @@ void SCEGeant4Output2ROOT::beginRun(const G4Run* run) {
 
 /// Fill single EVENT branch entry (Geant4 collection data)
 int SCEGeant4Output2ROOT::fill(const string& nam, const ComponentCast& type, void* ptr) {
-  std::cout<<"in scegeant4output2root 6"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 6"<<std::endl;
 
   if (m_file) {
     TBranch* b = 0;
@@ -155,7 +155,7 @@ int SCEGeant4Output2ROOT::fill(const string& nam, const ComponentCast& type, voi
 
 /// Commit data at end of filling procedure
 void SCEGeant4Output2ROOT::commit(OutputContext<G4Event>& ctxt) {
-  std::cout<<"in scegeant4output2root 7"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 7"<<std::endl;
 
   if (m_file) {
     TObjArray* a = m_tree->GetListOfBranches();
@@ -181,7 +181,7 @@ void SCEGeant4Output2ROOT::commit(OutputContext<G4Event>& ctxt) {
 
 /// Callback to store the Geant4 event
 void SCEGeant4Output2ROOT::saveEvent(OutputContext<G4Event>& /* ctxt */) {
-  std::cout<<"in scegeant4output2root 8"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 8"<<std::endl;
 
   if ( !m_disableParticles )  {
     Geant4ParticleMap* parts = context()->event().extension<Geant4ParticleMap>();
@@ -206,7 +206,7 @@ void SCEGeant4Output2ROOT::saveEvent(OutputContext<G4Event>& /* ctxt */) {
 
 /// Callback to store each Geant4 hit collection
 void SCEGeant4Output2ROOT::saveCollection(OutputContext<G4Event>& /* ctxt */, G4VHitsCollection* collection) {
-  std::cout<<"in scegeant4output2root 9"<<std::endl;
+  //  std::cout<<"in scegeant4output2root 9"<<std::endl;
 
   Geant4HitCollection* coll = dynamic_cast<Geant4HitCollection*>(collection);
   string hc_nam = collection->GetName();
