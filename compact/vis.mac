@@ -64,6 +64,7 @@
 /vis/filtering/trajectories/particleFilter-0/add opticalphoton
 /vis/filtering/trajectories/particleFilter-0/add mu-
 /vis/filtering/trajectories/particleFilter-0/add gamma
+/vis/filtering/trajectories/particleFilter-0/add neutron
 
 #
 # To invert the above, drawing all particles except gammas,
@@ -80,6 +81,7 @@
 /vis/modeling/trajectories/drawByParticleID-0/set mu+ blue
 /vis/modeling/trajectories/drawByParticleID-0/set gamma yellow
 /vis/modeling/trajectories/drawByParticleID-0/set opticalphoton black
+/vis/modeling/trajectories/drawByParticleID-0/set neutron orange
 #
 # To superimpose all of the events from a given run:
 /vis/scene/endOfEventAction accumulate 1

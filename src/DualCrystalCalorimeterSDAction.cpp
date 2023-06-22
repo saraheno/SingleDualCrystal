@@ -214,7 +214,13 @@ namespace dd4hep {
               track->SetTrackStatus(fStopAndKill);}
           else {
             //      if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1)  ) hit->ncerenkov+=1;
-            if( (phstep==1)  ) hit->ncerenkov+=1;
+            if( (phstep==1)  ) {
+	      hit->ncerenkov+=1;
+	      if(ibin>-1&&ibin<hit->nfinebin) ((hit->ncerwave).at(ibin))+=1;
+	      if(jbin>-1&&jbin<hit->nfinebin) ((hit->ncertime).at(jbin))+=1;
+	      if(( xbin>-1&&xbin<hit->ncoarsebin)&&(ybin>-1&&ybin<hit->ncoarsebin)) ((hit->cerhitpos).at(xbin).at(ybin))+=1;
+
+	    }
           }
 
           //return false;
@@ -239,7 +245,12 @@ namespace dd4hep {
 	      track->SetTrackStatus(fStopAndKill);}
 	  else {
 	    //	    if( (track->GetParentID()==1)&&(track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
-	    if( (track->GetCurrentStepNumber()==1) ) hit->nscintillator+=1; 
+	    if( (track->GetCurrentStepNumber()==1) ) {
+	      hit->nscintillator+=1; 
+	      if((ibin>-1)&&(ibin<hit->nfinebin)) ((hit->nscintwave).at(ibin))+=1;
+	      if(jbin>-1&&jbin<hit->nfinebin) ((hit->nscinttime).at(jbin))+=1;
+	      if(( xbin>-1&&xbin<hit->ncoarsebin)&&(ybin>-1&&ybin<hit->ncoarsebin)) ((hit->scinthitpos).at(xbin).at(ybin))+=1;
+	    }
 	  }
 
           //return false;
