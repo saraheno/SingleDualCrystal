@@ -16,13 +16,18 @@
 #include <algorithm>
 
 
+const int nfine=6000;
+const int ncoarse=40;
+
+
+
 // information about hit channel IT numbers
 const int nchan = 4;
 const int ichan[nchan] = {64,73,74,75};  // channel 74 is the crystal, 73 and 75 the two kill media
 std::string namechan[nchan] = {"air","PD1","crystal","PD2"};
 
 
-void crystalana(int num_evtsmax, const char* inputfilename) {
+void crystalana(int num_evtsmax, const char* inputfilename,float SCINTSCALEUP, float CERSCALEUP) {
 
 
   typedef std::vector<dd4hep::sim::Geant4Particle*> GenParts;
@@ -69,33 +74,33 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
   TH1F *hcEcalE2 = new TH1F("hcEcalE2","energy chan 2",100,0.,10000);
   TH1F *hcEcalE3 = new TH1F("hcEcalE3","energy chan 3",100,0.,10000);
 
-  TH1F *hcerwave0 = new TH1F("hcerwave0","cerenkov wavelength",1000,300.,1000.);
-  TH1F *hscintwave0 = new TH1F("hscintwave0","scintillator wavelength",1000,300.,1000.);
-  TH1F *hcertime0 = new TH1F("hcertime0","cerenkov time",1000,0.,20.);
-  TH1F *hscinttime0 = new TH1F("hscinttime0","scintillator time",1000,0.,20.);
-  TH2F *hcerxy0 = new TH2F("hcerxy0","x y hit position",40,-10.,10.,40,-10.,10.);
-  TH2F *hscintxy0 = new TH2F("hscintxy0","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH1F *hcerwave0 = new TH1F("hcerwave0","cerenkov wavelength",nfine,300.,1000.);
+  TH1F *hscintwave0 = new TH1F("hscintwave0","scintillator wavelength",nfine,300.,1000.);
+  TH1F *hcertime0 = new TH1F("hcertime0","cerenkov time",nfine,0.,300.);
+  TH1F *hscinttime0 = new TH1F("hscinttime0","scintillator time",nfine,0.,300.);
+  TH2F *hcerxy0 = new TH2F("hcerxy0","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
+  TH2F *hscintxy0 = new TH2F("hscintxy0","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
 
-  TH1F *hcerwave1 = new TH1F("hcerwave1","cerenkov wavelength",1000,300.,1000.);
-  TH1F *hscintwave1 = new TH1F("hscintwave1","scintillator wavelength",1000,300.,1000.);
-  TH1F *hcertime1 = new TH1F("hcertime1","cerenkov time",1000,0.,20.);
-  TH1F *hscinttime1 = new TH1F("hscinttime1","scintillator time",1000,0.,20.);
-  TH2F *hcerxy1 = new TH2F("hcerxy1","x y hit position",40,-10.,10.,40,-10.,10.);
-  TH2F *hscintxy1 = new TH2F("hscintxy1","x y hit position",40,-10.,10.,40,0-1.,10.);
+  TH1F *hcerwave1 = new TH1F("hcerwave1","cerenkov wavelength",nfine,300.,1000.);
+  TH1F *hscintwave1 = new TH1F("hscintwave1","scintillator wavelength",nfine,300.,1000.);
+  TH1F *hcertime1 = new TH1F("hcertime1","cerenkov time",nfine,0.,300.);
+  TH1F *hscinttime1 = new TH1F("hscinttime1","scintillator time",nfine,0.,300.);
+  TH2F *hcerxy1 = new TH2F("hcerxy1","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
+  TH2F *hscintxy1 = new TH2F("hscintxy1","x y hit position",ncoarse,-10.,10.,ncoarse,0-1.,10.);
 
-  TH1F *hcerwave2 = new TH1F("hcerwave2","cerenkov wavelength",1000,300.,1000.);
-  TH1F *hscintwave2 = new TH1F("hscintwave2","scintillator wavelength",1000,300.,1000.);
-  TH1F *hcertime2 = new TH1F("hcertime2","cerenkov time",1000,0.,20.);
-  TH1F *hscinttime2 = new TH1F("hscinttime2","scintillator time",1000,0.,20.);
-  TH2F *hcerxy2 = new TH2F("hcerxy2","x y hit position",40,-10.,10.,40,-10.,10.);
-  TH2F *hscintxy2 = new TH2F("hscintxy2","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH1F *hcerwave2 = new TH1F("hcerwave2","cerenkov wavelength",nfine,300.,1000.);
+  TH1F *hscintwave2 = new TH1F("hscintwave2","scintillator wavelength",nfine,300.,1000.);
+  TH1F *hcertime2 = new TH1F("hcertime2","cerenkov time",nfine,0.,300.);
+  TH1F *hscinttime2 = new TH1F("hscinttime2","scintillator time",nfine,0.,300.);
+  TH2F *hcerxy2 = new TH2F("hcerxy2","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
+  TH2F *hscintxy2 = new TH2F("hscintxy2","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
 
-  TH1F *hcerwave3 = new TH1F("hcerwave3","cerenkov wavelength",1000,300.,1000.);
-  TH1F *hscintwave3 = new TH1F("hscintwave3","scintillator wavelength",1000,300.,1000.);
-  TH1F *hcertime3 = new TH1F("hcertime3","cerenkov time",1000,0.,20.);
-  TH1F *hscinttime3 = new TH1F("hscinttime3","scintillator time",1000,0.,20.);
-  TH2F *hcerxy3 = new TH2F("hcerxy3","x y hit position",40,-10.,10.,40,-10.,10.);
-  TH2F *hscintxy3 = new TH2F("hscintxy3","x y hit position",40,-10.,10.,40,-10.,10.);
+  TH1F *hcerwave3 = new TH1F("hcerwave3","cerenkov wavelength",nfine,300.,1000.);
+  TH1F *hscintwave3 = new TH1F("hscintwave3","scintillator wavelength",nfine,300.,1000.);
+  TH1F *hcertime3 = new TH1F("hcertime3","cerenkov time",nfine,0.,300.);
+  TH1F *hscinttime3 = new TH1F("hscinttime3","scintillator time",nfine,0.,300.);
+  TH2F *hcerxy3 = new TH2F("hcerxy3","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
+  TH2F *hscintxy3 = new TH2F("hscintxy3","x y hit position",ncoarse,-10.,10.,ncoarse,-10.,10.);
 
 
   // open data and output file for histograms
@@ -233,28 +238,28 @@ void crystalana(int num_evtsmax, const char* inputfilename) {
 	//std::cout<<"  ncerwave["<<j<<"]="<<(aecalhit->ncerwave)[j]<<std::endl;
 	//std::cout<<"  nscintwave["<<j<<"]="<<(aecalhit->nscintwave)[j]<<std::endl;
 	  if(kchan==0) {
-	    hcerwave0->AddBinContent(j,(aecalhit->ncerwave)[j]);
-	    hscintwave0->AddBinContent(j,(aecalhit->nscintwave)[j]);
-	    hcertime0->AddBinContent(j,(aecalhit->ncertime)[j]);
-	    hscinttime0->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	    hcerwave0->AddBinContent(j,CERSCALEUP*(aecalhit->ncerwave)[j]);
+	    hscintwave0->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscintwave)[j]);
+	    hcertime0->AddBinContent(j,CERSCALEUP*(aecalhit->ncertime)[j]);
+	    hscinttime0->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==1) {
-	    hcerwave1->AddBinContent(j,(aecalhit->ncerwave)[j]);
-	    hscintwave1->AddBinContent(j,(aecalhit->nscintwave)[j]);
-	    hcertime1->AddBinContent(j,(aecalhit->ncertime)[j]);
-	    hscinttime1->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	    hcerwave1->AddBinContent(j,CERSCALEUP*(aecalhit->ncerwave)[j]);
+	    hscintwave1->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscintwave)[j]);
+	    hcertime1->AddBinContent(j,CERSCALEUP*(aecalhit->ncertime)[j]);
+	    hscinttime1->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==2) {
-	    hcerwave2->AddBinContent(j,(aecalhit->ncerwave)[j]);
-	    hscintwave2->AddBinContent(j,(aecalhit->nscintwave)[j]);
-	    hcertime2->AddBinContent(j,(aecalhit->ncertime)[j]);
-	    hscinttime2->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	    hcerwave2->AddBinContent(j,CERSCALEUP*(aecalhit->ncerwave)[j]);
+	    hscintwave2->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscintwave)[j]);
+	    hcertime2->AddBinContent(j,CERSCALEUP*(aecalhit->ncertime)[j]);
+	    hscinttime2->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscinttime)[j]);
 	  }
 	  else if(kchan==3) {
-	    hcerwave3->AddBinContent(j,(aecalhit->ncerwave)[j]);
-	    hscintwave3->AddBinContent(j,(aecalhit->nscintwave)[j]);
-	    hcertime3->AddBinContent(j,(aecalhit->ncertime)[j]);
-	    hscinttime3->AddBinContent(j,(aecalhit->nscinttime)[j]);
+	    hcerwave3->AddBinContent(j,CERSCALEUP*(aecalhit->ncerwave)[j]);
+	    hscintwave3->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscintwave)[j]);
+	    hcertime3->AddBinContent(j,CERSCALEUP*(aecalhit->ncertime)[j]);
+	    hscinttime3->AddBinContent(j,SCINTSCALEUP*(aecalhit->nscinttime)[j]);
 	  }
 
 	}

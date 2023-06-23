@@ -787,7 +787,6 @@
 
 
 
-<!-- danger danger will robinson using values for polystyrene -->
   <material name="E_PbWO4">
     <D value="8.28" unit="g/cm3" />
     <fraction n="0.45532661" ref="Pb"/>
@@ -796,8 +795,7 @@
     <property name="RINDEX"        ref="RINDEX__PbWO4"/>
       <property name="ABSLENGTH" ref="AbsLen_PbWO4"/>
       <property name="SCINTILLATIONCOMPONENT1" ref="scintFast_PbWO4"/>
-<!--      <constant name="SCINTILLATIONYIELD" value="0.45/keV"/> -->
-      <constant name="SCINTILLATIONYIELD" value="0.45/keV"/> 
+      <constant name="SCINTILLATIONYIELD" value="0.45/keV"/>
       <constant name="SCINTILLATIONTIMECONSTANT1" value="5.*ns"/>
       <constant name="SCINTILLATIONTIMECONSTANT2" value="15.*ns"/>
       <constant name="SCINTILLATIONRISETIME1" value="0.01*ns"/>
@@ -806,6 +804,8 @@
   </material>
 
 
+
+<!-- scale factor for scint is -->
   <material name="BGO">
     <D value="7.10" unit="g/cm3" />
     <fraction n="0.67098514" ref="Bi"/>
@@ -814,10 +814,14 @@
     <property name="RINDEX"        ref="RINDEX__BGO"/>
       <property name="ABSLENGTH" ref="AbsLen_BGO"/>
       <property name="SCINTILLATIONCOMPONENT1" ref="scintFast_BGO"/>
-      <constant name="SCINTILLATIONYIELD" value="9./keV"/>
-      <constant name="SCINTILLATIONTIMECONSTANT1" value="2.8*ns"/>
+<!--      <constant name="SCINTILLATIONYIELD" value="9./keV"/> -->
+<!-- scale factor for scint is 20 -->
+      <constant name="SCINTILLATIONYIELD" value="0.45/keV"/>
+      <constant name="SCINTILLATIONTIMECONSTANT1" value="300.0*ns"/>
       <constant name="RESOLUTIONSCALE" value="1."/>
   </material>
+
+
   
   <material name="PbF2">
     <D value="7.77" unit="g/cm3" />

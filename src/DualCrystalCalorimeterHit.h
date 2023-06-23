@@ -26,7 +26,7 @@ typedef ROOT::Math::XYZVector Direction;
 
 namespace CalVision {
 
-    const int finenbin=1000;
+    const int finenbin=6000;
     const int coarsenbin=40;
 
   /// This is the hit definition.
@@ -55,7 +55,7 @@ namespace CalVision {
     float wavelenmax=1000;
     int nfinebin=finenbin;
     float timemin=0;
-    float timemax=20;
+    float timemax=300;
     std::array<int,finenbin>  ncerwave;
     std::array<int,finenbin> nscintwave;
     std::array<int,finenbin>  ncertime;

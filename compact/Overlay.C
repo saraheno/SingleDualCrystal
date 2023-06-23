@@ -7,7 +7,7 @@ void Overlay()
   char* atitle = "timing weird units";
 
 
-  TFile *f1 = new TFile("./hist5cm.root");
+  TFile *f1 = new TFile("./hist.root");
 
 
   gStyle->SetOptStat(0);
