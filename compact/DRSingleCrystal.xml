@@ -800,7 +800,7 @@
       <constant name="SCINTILLATIONTIMECONSTANT2" value="15.*ns"/>
       <constant name="SCINTILLATIONRISETIME1" value="0.01*ns"/>
       <constant name="RESOLUTIONSCALE" value="1."/>
-      <constant name="SCINTILLATIONYIELD1" value="0.3"/>
+      <constant name="SCINTILLATIONYIELD1" value="0.3"/> <!-- frac in first compoent -->
   </material>
 
 
