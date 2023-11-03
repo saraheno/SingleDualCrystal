@@ -18,35 +18,21 @@
 <!-- ====================================================================== -->
 
 
-<!-- please note these are half lengths and widths -->
-
   <detectors>
     <detector id="EcalBarrel_ID" name="DRCrystal" type="DD4hep_DRCrystal" readout="DRCNoSegment" vis="Invisible">
 
 
  <comment>Electromagnetic Calorimeter Barrel</comment>
 
+<dimensions width="2*DRcrystalwidth" z_length="DRcrystallength+2*DRcrystalSipmwidth+1*cm" />
 
 
-<dimensions width="DRcrystalwidth" z_length="DRcrystallength+0.2" />
+<structure>
+       <slice material = "killMedia1" thickness = "DRcrystalSipmthick" depth="DRcrystalSipmwidth" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+      <shape material = "E_PbWO4" thickness = "DRcrystallength" depth="DRcrystalwidth" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/>
+      <disk material = "killMedia2" thickness = "DRcrystalSipmthick" depth="DRcrystalSipmwidth" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
+</structure>
 
-
-
-
-<!--  a tower may have several different patterns that repeat.
-for example, there may be 10 layers with one thickness of Pb and scint and 20 with another set of thicknesses.
-each of these repeating things is a "layer". (so in this example, two "layers") 
-within a layer is a slice os the Pb and scint are slices
-the assembled tower is a Stave 
--->
-
- <staves vis="Invisible"/>
-<layer repeat="1" vis="Invisible">
-      <slice material = "killMedia1" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
-<!--      <slice material = "E_PbWO4" thickness = "DRcrystallength" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/> -->
-      <slice material = "E_PbWO4" thickness = "DRcrystallength" sensitive="yes" limits="cal_limits" vis="CrystalEcalLayerVis"/>
-      <slice material = "killMedia2" thickness = "0.1" sensitive="yes" limits="cal_limits" vis="CrystalEcalSensitiveVis"/>
-</layer>
     </detector>
   </detectors>
 

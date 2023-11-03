@@ -23,7 +23,7 @@ const int ncoarse=40;
 
 // information about hit channel IT numbers
 const int nchan = 4;
-const int ichan[nchan] = {64,73,74,75};  // channel 74 is the crystal, 73 and 75 the two kill media
+const int ichan[nchan] = {64,66,65,67};  // channel 74 is the crystal, 73 and 75 the two kill media
 std::string namechan[nchan] = {"air","PD1","crystal","PD2"};
 
 

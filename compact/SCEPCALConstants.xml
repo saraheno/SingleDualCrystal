@@ -14,8 +14,9 @@
 
     <constant name="DRcrystalwidth" value="1.0*cm"/>
 <!--    <constant name="DRcrystallength" value="21.*cm"/> -->
-    <constant name="DRcrystallength" value="21.*cm"/>
-
+    <constant name="DRcrystallength" value="5.*cm"/>
+    <constant name="DRcrystalSipmthick" value="0.2*cm"/>
+    <constant name="DRcrystalSipmwidth" value="0.25*cm"/>
     
     <constant name="EcalBarrel_ID" value="1"/>
 
